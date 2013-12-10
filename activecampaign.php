@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/extend-wordpress.php
 Description: This plugin connects WordPress with your ActiveCampaign software and allows you to embed your subscription forms on your site.
 Author: ActiveCampaign
-Version: 5.0
+Version: 5.1
 Author URI: http://www.activecampaign.com
 */
 
@@ -18,6 +18,7 @@ Author URI: http://www.activecampaign.com
 ## version 4.0: Added many additional settings to control how your form is displayed and submitted.
 ## version 4.5: Added ActiveCampaign to the Settings menu so you can use the shortcode independent of the widget.
 ## version 5.0: Added support for multiple forms. Removed widget entirely.
+## version 5.1: Added button to TinyMCE toolbar to more easily choose and embed the form shortcode into the post body.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -375,7 +376,7 @@ function activecampaign_plugin_options() {
 
 }
 
-function dbg($var, $continue = 0, $element = "pre") {
+function ac_dbg($var, $continue = 0, $element = "pre") {
   echo "<" . $element . ">";
   echo "Vartype: " . gettype($var) . "\n";
   if ( is_array($var) ) echo "Elements: " . count($var) . "\n\n";
@@ -534,9 +535,122 @@ function activecampaign_plugin_menu() {
 	add_options_page(__("ActiveCampaign Settings", "menu-activecampaign"), __("ActiveCampaign", "menu-activecampaign"), "manage_options", "activecampaign", "activecampaign_plugin_options");
 }
 
+function activecampaign_editor_buttons() {
+	add_filter("mce_external_plugins", "activecampaign_add_buttons");
+	add_filter("mce_buttons", "activecampaign_register_buttons");
+}
+
+function activecampaign_add_buttons($plugin_array) {
+	$plugin_array["activecampaign_editor_buttons"] = get_site_url() . "/wp-content/plugins/activecampaign-subscription-forms/editor_buttons.js";
+	return $plugin_array;
+}
+
+function activecampaign_register_buttons($buttons) {
+	array_push($buttons, "activecampaign_editor_forms");
+	return $buttons;
+}
+
 //add_action("widgets_init", "activecampaign_register_widgets");
 add_action("init", "activecampaign_register_shortcodes");
+add_action("init", "activecampaign_editor_buttons");
 add_action("admin_menu", "activecampaign_plugin_menu");
 add_filter("widget_text", "do_shortcode");
+
+add_action("admin_footer", "activecampaign_javascript");
+add_action("wp_ajax_activecampaign_get_forms", "activecampaign_get_forms_callback");
+add_action("admin_enqueue_scripts", "activecampaign_custom_wp_admin_style");
+
+function activecampaign_javascript() {
+	$no_forms1 = __("No forms chosen yet. Go to the", "activecampaign-subscription-forms");
+	$no_forms2 = __("to choose your forms", "activecampaign-subscription-forms");
+	$no_forms3 = __("ActiveCampaign Settings page", "activecampaign-subscription-forms");
+	?>
+	<script type="text/javascript">
+
+		var $AC = jQuery.noConflict();
+
+		function activecampaign_editor_form_embed(form_id) {
+			// puts the [activecampaign form=#] shortcode into the body of the post.
+			var return_text = "[activecampaign form=" + form_id + "]";
+			tinymce.execCommand("mceInsertContent", 0, return_text);
+			$AC("#activecampaign_editor_forms").dialog("close");
+		}
+
+		function activecampaign_editor_form_dialog() {
+			// runs when you click the ActiveCampaign icon in the TinyMCE toolbar.
+
+			// shows the dialog to choose a form (after clicking the button in the editor).
+			$AC("#activecampaign_editor_forms").dialog({
+				title: "Insert ActiveCampaign Form"
+			});
+
+		}
+
+		jQuery(document).ready(function($AC) {
+
+			var editor_forms = "<div id='activecampaign_editor_forms'></div>";
+
+			var ajaxdata = {
+				action: "activecampaign_get_forms"
+				//whatever: 1234
+			};
+
+			$AC.ajax({
+				url: ajaxurl,
+				type: "GET",
+				data: ajaxdata,
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.log(errorThrown);
+				},
+				success: function(data) {
+					data = JSON.parse(data);
+//console.log(data);
+//console.log(data.length);
+					if (typeof(data.length) == "undefined") {
+						// when there is data, data.length returns undefined for some reason.
+						var editor_forms = "<ul>";
+						for (var i in data) {
+							if (typeof(data[i]) != "function") {
+								editor_forms += "<li><a href='#' onclick='activecampaign_editor_form_embed(" + i + "); return false;'>" + data[i] + "</a></li>";
+							}
+						}
+						editor_forms += "</ul>";
+					}
+					else if (data.length == 0) {
+						var editor_forms = "<p><?php echo $no_forms1; ?> <a href='options-general.php?page=activecampaign'><?php echo $no_forms3; ?></a> <?php echo $no_forms2; ?>.</p>";
+					}
+					$AC("#activecampaign_editor_forms").html(editor_forms);
+				}
+			});
+
+			$AC("body").append(editor_forms);
+
+		});
+
+	</script>
+	<?php
+}
+
+function activecampaign_get_forms_callback() {
+	// get forms that are cached after setting things up from the ActiveCampaign settings page.
+	global $wpdb; // this is how you get access to the database
+	$forms = array();
+	$settings = get_option("settings_activecampaign");
+//ac_dbg($settings);
+	if ($settings["form_id"]) {
+		foreach ($settings["forms"] as $form) {
+			if (in_array($form["id"], $settings["form_id"])) {
+				$forms[$form["id"]] = $form["name"];
+			}
+		}
+	}
+	echo json_encode($forms);
+	die(); // this is required to return a proper result
+}
+
+function activecampaign_custom_wp_admin_style() {
+	wp_register_style("activecampaign-subscription-forms", "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
+	wp_enqueue_style("activecampaign-subscription-forms");
+}
 
 ?>
