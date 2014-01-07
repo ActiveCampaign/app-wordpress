@@ -588,7 +588,7 @@ function activecampaign_javascript() {
 
 		jQuery(document).ready(function($AC) {
 
-			var editor_forms = "<div id='activecampaign_editor_forms'></div>";
+			var editor_forms = "<div id='activecampaign_editor_forms' style='display: none;'></div>";
 
 			var ajaxdata = {
 				action: "activecampaign_get_forms"

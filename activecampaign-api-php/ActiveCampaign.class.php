@@ -13,6 +13,7 @@ class ActiveCampaign extends AC_Connector {
 	public $track_email;
 	public $track_actid;
 	public $track_key;
+	public $debug = false;
 
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		$this->url = $url;
@@ -24,6 +25,15 @@ class ActiveCampaign extends AC_Connector {
 		// IE: "contact/view"
 		$components = explode("/", $path);
 		$component = $components[0];
+
+		if (count($components) > 2) {
+			// IE: "contact/tag/add?whatever"
+			// shift off the first item (the component, IE: "contact").
+			array_shift($components);
+			// IE: convert to "tag_add?whatever"
+			$method_str = implode("_", $components);
+			$components = array($component, $method_str);
+		}
 
 		if (preg_match("/\?/", $components[1])) {
 			// query params appended to method
@@ -80,6 +90,8 @@ class ActiveCampaign extends AC_Connector {
 			// reserved word
 			$method = "list_";
 		}
+
+		$class->debug = $this->debug;
 
 		$response = $class->$method($params, $post_data);
 		return $response;
