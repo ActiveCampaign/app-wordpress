@@ -556,7 +556,12 @@ add_action("init", "activecampaign_editor_buttons");
 add_action("admin_menu", "activecampaign_plugin_menu");
 add_filter("widget_text", "do_shortcode");
 
-add_action("admin_footer", "activecampaign_javascript");
+global $pagenow;
+if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
+	// only run the ajax call for forms on the appropriate pages.
+	add_action("admin_footer", "activecampaign_javascript");
+}
+
 add_action("wp_ajax_activecampaign_get_forms", "activecampaign_get_forms_callback");
 add_action("admin_enqueue_scripts", "activecampaign_custom_wp_admin_style");
 
