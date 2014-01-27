@@ -415,7 +415,7 @@ function activecampaign_form_html($ac, $instance) {
 
 		// $instance["form_id"] is an array of form ID's (since we allow multiple now).
 
-    if (in_array($form["id"], $instance["form_id"])) {
+    if (isset($instance["form_id"]) && in_array($form["id"], $instance["form_id"])) {
 
 			$form_embed_params = array(
 				"id" => $form["id"],
@@ -460,38 +460,41 @@ function activecampaign_form_html($ac, $instance) {
         //$html = preg_replace("/input type='button'/", "input type='submit'", $html);
       }
 
-			// get the style content so we can prepend each rule with the form ID (IE: #_form_1341).
-			// this is in case there are multiple forms on the same page - their styles need to be unique.
-			preg_match_all("|<style[^>]*>(.*)</style>|iUs", $html, $style_blocks);
-			if (isset($style_blocks[1]) && isset($style_blocks[1][0]) && $style_blocks[1][0]) {
-				$css = $style_blocks[1][0];
-				// remove excess whitespace from within the string.
-				$css = preg_replace("/\s+/", " ", $css);
-				// remove whitespace from beginning and end of string.
-				$css = trim($css);
-				$css_rules = explode("}", $css);
-				$css_rules_new = array();
-				foreach ($css_rules as $rule) {
-					$rule_array = explode("{", $rule);
-					$rule_array[0] = preg_replace("/\s+/", " ", $rule_array[0]);
-					$rule_array[0] = trim($rule_array[0]);
-					$rule_array[1] = preg_replace("/\s+/", " ", $rule_array[1]);
-					$rule_array[1] = trim($rule_array[1]);
-					if ($rule_array[1]) {
-						// there could be comma-separated rules.
-						$rule_array2 = explode(",", $rule_array[0]);
-						foreach ($rule_array2 as $rule_) {
-							$rule_ = "#_form_" . $form["id"] . " " . $rule_;
-							$css_rules_new[] = $rule_ . " {" . $rule_array[1] . "}";
+			if ((int)$form_embed_params["css"]) {
+				// get the style content so we can prepend each rule with the form ID (IE: #_form_1341).
+				// this is in case there are multiple forms on the same page - their styles need to be unique.
+				preg_match_all("|<style[^>]*>(.*)</style>|iUs", $html, $style_blocks);
+				if (isset($style_blocks[1]) && isset($style_blocks[1][0]) && $style_blocks[1][0]) {
+					$css = $style_blocks[1][0];
+					// remove excess whitespace from within the string.
+					$css = preg_replace("/\s+/", " ", $css);
+					// remove whitespace from beginning and end of string.
+					$css = trim($css);
+					$css_rules = explode("}", $css);
+					$css_rules_new = array();
+					foreach ($css_rules as $rule) {
+						$rule_array = explode("{", $rule);
+						$rule_array[0] = preg_replace("/\s+/", " ", $rule_array[0]);
+						$rule_array[0] = trim($rule_array[0]);
+						$rule_array[1] = preg_replace("/\s+/", " ", $rule_array[1]);
+						$rule_array[1] = trim($rule_array[1]);
+						if ($rule_array[1]) {
+							// there could be comma-separated rules.
+							$rule_array2 = explode(",", $rule_array[0]);
+							foreach ($rule_array2 as $rule_) {
+								$rule_ = "#_form_" . $form["id"] . " " . $rule_;
+								$css_rules_new[] = $rule_ . " {" . $rule_array[1] . "}";
+							}
 						}
 					}
-				}
-			};
-			$new_css = implode("\n\n", $css_rules_new);
-			// remove existing styles.
-			$html = preg_replace("/<style[^>]*>(.*)<\/style>/s", "", $html);
-			// replace with updated CSS string.
-			$html = "<style>" . $new_css . "</style>" . $html;
+				};
+
+				$new_css = implode("\n\n", $css_rules_new);
+				// remove existing styles.
+				$html = preg_replace("/<style[^>]*>(.*)<\/style>/s", "", $html);
+				// replace with updated CSS string.
+				$html = "<style>" . $new_css . "</style>" . $html;
+			}
 
 			// check for custom width.
       if ((int)$form["widthpx"]) {
@@ -558,7 +561,6 @@ add_filter("widget_text", "do_shortcode");
 
 global $pagenow;
 if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
-	// only run the ajax call for forms on the appropriate pages.
 	add_action("admin_footer", "activecampaign_javascript");
 }
 
