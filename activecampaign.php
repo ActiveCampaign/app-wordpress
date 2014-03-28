@@ -411,112 +411,118 @@ function activecampaign_getforms($ac, $instance) {
 
 function activecampaign_form_html($ac, $instance) {
 
-  foreach ($instance["forms"] as $form) {
+	if ($instance["forms"]) {
+		foreach ($instance["forms"] as $form) {
 
-		// $instance["form_id"] is an array of form ID's (since we allow multiple now).
+			// $instance["form_id"] is an array of form ID's (since we allow multiple now).
 
-    if (isset($instance["form_id"]) && in_array($form["id"], $instance["form_id"])) {
+			if (isset($instance["form_id"]) && in_array($form["id"], $instance["form_id"])) {
 
-			$form_embed_params = array(
-				"id" => $form["id"],
-				"ajax" => $instance["ajax"][$form["id"]],
-				"css" => $instance["css"][$form["id"]],
-			);
+				$form_embed_params = array(
+					"id" => $form["id"],
+					"ajax" => $instance["ajax"][$form["id"]],
+					"css" => $instance["css"][$form["id"]],
+				);
 
-			$sync = ($instance["syim"][$form["id"]] == "sync") ? 1 : 0;
+				$sync = ($instance["syim"][$form["id"]] == "sync") ? 1 : 0;
 
-			if ($instance["action"][$form["id"]]) {
-				$form_embed_params["action"] = $instance["action"][$form["id"]];
-			}
+				if ($instance["action"][$form["id"]]) {
+					$form_embed_params["action"] = $instance["action"][$form["id"]];
+				}
 
-    	if ((int)$form_embed_params["ajax"] && !isset($form_embed_params["action"])) {
-    		// if they are using Ajax, but have not provided a custom action URL, we need to push it to a script where we can submit the form/process API request.
-    		// remove the "http(s)" portion, because it was conflicting with the Ajax request (I was getting 404's).
-    		$api_url_process = preg_replace("/https:\/\//", "", $instance["api_url"]);
-				$form_embed_params["action"] = get_site_url() . "/wp-content/plugins/activecampaign-subscription-forms/form_process.php?api_url=" . $api_url_process . "&api_key=" . $instance["api_key"] . "&sync=" . $sync;
-			}
+				if ((int)$form_embed_params["ajax"] && !isset($form_embed_params["action"])) {
+					// if they are using Ajax, but have not provided a custom action URL, we need to push it to a script where we can submit the form/process API request.
+					// remove the "http(s)" portion, because it was conflicting with the Ajax request (I was getting 404's).
+					$api_url_process = preg_replace("/https:\/\//", "", $instance["api_url"]);
+					$form_embed_params["action"] = get_site_url() . "/wp-content/plugins/activecampaign-subscription-forms/form_process.php?api_url=" . $api_url_process . "&api_key=" . $instance["api_key"] . "&sync=" . $sync;
+				}
 
-			// prepare the params for the API call
-    	$api_params = array();
-			foreach ($form_embed_params as $var => $val) {
-				$api_params[] = $var . "=" . urlencode($val);
-			}
+				// prepare the params for the API call
+				$api_params = array();
+				foreach ($form_embed_params as $var => $val) {
+					$api_params[] = $var . "=" . urlencode($val);
+				}
 
-      // fetch the HTML source
-      $html = $ac->api("form/embed?" . implode("&", $api_params));
+				// fetch the HTML source
+				$html = $ac->api("form/embed?" . implode("&", $api_params));
 
-      if ((int)$form_embed_params["ajax"]) {
-      	// used for the result message that is displayed after submitting the form via Ajax
-      	$html = "<div id=\"form_result_message\"></div>" . $html;
-      }
+				if ((int)$form_embed_params["ajax"]) {
+					// used for the result message that is displayed after submitting the form via Ajax
+					$html = "<div id=\"form_result_message\"></div>" . $html;
+				}
 
-      if ($html) {
-        if ($instance["account"]) {
-          // replace the API URL with the account URL (IE: https://account.api-us1.com is changed to http://account.activehosted.com).
-          // (the form has to submit to the account URL.)
-          if (!$instance["action"]) $html = preg_replace("/action=['\"][^'\"]+['\"]/", "action='http://" . $instance["account"] . "/proc.php'", $html);
-        }
-        // replace the Submit button to be an actual submit type.
-        //$html = preg_replace("/input type='button'/", "input type='submit'", $html);
-      }
+				if ($html) {
+					if ($instance["account"]) {
+						// replace the API URL with the account URL (IE: https://account.api-us1.com is changed to http://account.activehosted.com).
+						// (the form has to submit to the account URL.)
+						if (!$instance["action"]) $html = preg_replace("/action=['\"][^'\"]+['\"]/", "action='http://" . $instance["account"] . "/proc.php'", $html);
+					}
+					// replace the Submit button to be an actual submit type.
+					//$html = preg_replace("/input type='button'/", "input type='submit'", $html);
+				}
 
-			if ((int)$form_embed_params["css"]) {
-				// get the style content so we can prepend each rule with the form ID (IE: #_form_1341).
-				// this is in case there are multiple forms on the same page - their styles need to be unique.
-				preg_match_all("|<style[^>]*>(.*)</style>|iUs", $html, $style_blocks);
-				if (isset($style_blocks[1]) && isset($style_blocks[1][0]) && $style_blocks[1][0]) {
-					$css = $style_blocks[1][0];
-					// remove excess whitespace from within the string.
-					$css = preg_replace("/\s+/", " ", $css);
-					// remove whitespace from beginning and end of string.
-					$css = trim($css);
-					$css_rules = explode("}", $css);
-					$css_rules_new = array();
-					foreach ($css_rules as $rule) {
-						$rule_array = explode("{", $rule);
-						$rule_array[0] = preg_replace("/\s+/", " ", $rule_array[0]);
-						$rule_array[0] = trim($rule_array[0]);
-						$rule_array[1] = preg_replace("/\s+/", " ", $rule_array[1]);
-						$rule_array[1] = trim($rule_array[1]);
-						if ($rule_array[1]) {
-							// there could be comma-separated rules.
-							$rule_array2 = explode(",", $rule_array[0]);
-							foreach ($rule_array2 as $rule_) {
-								$rule_ = "#_form_" . $form["id"] . " " . $rule_;
-								$css_rules_new[] = $rule_ . " {" . $rule_array[1] . "}";
+				if ((int)$form_embed_params["css"]) {
+					// get the style content so we can prepend each rule with the form ID (IE: #_form_1341).
+					// this is in case there are multiple forms on the same page - their styles need to be unique.
+					preg_match_all("|<style[^>]*>(.*)</style>|iUs", $html, $style_blocks);
+					if (isset($style_blocks[1]) && isset($style_blocks[1][0]) && $style_blocks[1][0]) {
+						$css = $style_blocks[1][0];
+						// remove excess whitespace from within the string.
+						$css = preg_replace("/\s+/", " ", $css);
+						// remove whitespace from beginning and end of string.
+						$css = trim($css);
+						$css_rules = explode("}", $css);
+						$css_rules_new = array();
+						foreach ($css_rules as $rule) {
+							$rule_array = explode("{", $rule);
+							$rule_array[0] = preg_replace("/\s+/", " ", $rule_array[0]);
+							$rule_array[0] = trim($rule_array[0]);
+							$rule_array[1] = preg_replace("/\s+/", " ", $rule_array[1]);
+							$rule_array[1] = trim($rule_array[1]);
+							if ($rule_array[1]) {
+								// there could be comma-separated rules.
+								$rule_array2 = explode(",", $rule_array[0]);
+								foreach ($rule_array2 as $rule_) {
+									$rule_ = "#_form_" . $form["id"] . " " . $rule_;
+									$css_rules_new[] = $rule_ . " {" . $rule_array[1] . "}";
+								}
+							}
+						}
+					};
+
+					$new_css = implode("\n\n", $css_rules_new);
+					// remove existing styles.
+					$html = preg_replace("/<style[^>]*>(.*)<\/style>/s", "", $html);
+					// replace with updated CSS string.
+					$html = "<style>" . $new_css . "</style>" . $html;
+				}
+
+				// check for custom width.
+				if ((int)$form["widthpx"]) {
+					// if there is a custom width set
+					// find the ._form CSS rule
+					preg_match_all("/\._form {[^}]*}/", $html, $_form_css);
+					if (isset($_form_css[0]) && $_form_css[0]) {
+						foreach ($_form_css[0] as $_form) {
+							// find "width:400px"
+							preg_match("/width:[0-9]+px/", $_form, $width);
+							if (isset($width[0]) && $width[0]) {
+								// IE: replace "width:400px" with "width:200px"
+								$html = preg_replace("/" . $width[0] . "/", "width:" . (int)$form["widthpx"] . "px", $html);
 							}
 						}
 					}
-				};
+				}
 
-				$new_css = implode("\n\n", $css_rules_new);
-				// remove existing styles.
-				$html = preg_replace("/<style[^>]*>(.*)<\/style>/s", "", $html);
-				// replace with updated CSS string.
-				$html = "<style>" . $new_css . "</style>" . $html;
+				$instance["form_html"][$form["id"]] = $html;
+
 			}
 
-			// check for custom width.
-      if ((int)$form["widthpx"]) {
-        // if there is a custom width set
-        // find the ._form CSS rule
-        preg_match_all("/\._form {[^}]*}/", $html, $_form_css);
-        if (isset($_form_css[0]) && $_form_css[0]) {
-          foreach ($_form_css[0] as $_form) {
-            // find "width:400px"
-            preg_match("/width:[0-9]+px/", $_form, $width);
-            if (isset($width[0]) && $width[0]) {
-              // IE: replace "width:400px" with "width:200px"
-              $html = preg_replace("/" . $width[0] . "/", "width:" . (int)$form["widthpx"] . "px", $html);
-            }
-          }
-        }
-      }
-
-      $instance["form_html"][$form["id"]] = $html;
-
-    }
-
+		}
+  }
+  else {
+		// no forms created in the AC account yet.
+		echo "<p style='color: red;'>" . __("Make sure you have at least one form created in ActiveCampaign.") . "</p>";
   }
 
   return $instance;
