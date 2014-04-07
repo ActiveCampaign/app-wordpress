@@ -664,6 +664,8 @@ function activecampaign_get_forms_callback() {
 function activecampaign_custom_wp_admin_style() {
 	wp_register_style("activecampaign-subscription-forms", "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
 	wp_enqueue_style("activecampaign-subscription-forms");
+	wp_enqueue_script("jquery-ui-dialog");
+	wp_enqueue_style("wp-jquery-ui-dialog");
 }
 
 ?>
