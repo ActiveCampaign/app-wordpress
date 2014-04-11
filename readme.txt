@@ -5,7 +5,7 @@ Requires at least: 2
 Tested up to: 3.8
 Stable tag: trunk
 
-This plugin connects WordPress with your ActiveCampaign software and allows you to embed your subscription forms on your site.
+This plugin connects WordPress with your ActiveCampaign platform and allows you to embed your subscription forms on your site.
 
 == Description ==
 
@@ -30,7 +30,7 @@ This section describes how to install the plugin and get it working. Please see 
 
 = How do I create ActiveCampaign subscription forms to use in WordPress? =
 
-You need to be using [ActiveCampaign email marketing software](http://www.activecampaign.com/) to use this widget. Create new subscription forms in the software by going to the "Integration" section, then they will be available through this plugin.
+You need to be using [ActiveCampaign email marketing platform](http://www.activecampaign.com/) to use this widget. Create new subscription forms in the platform by going to the "Integration" section, then they will be available through this plugin.
 
 = How does this plugin differ from copying and pasting the subscription form onto my site manually? =
 
