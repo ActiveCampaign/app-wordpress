@@ -571,6 +571,7 @@ if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.
 }
 
 add_action("wp_ajax_activecampaign_get_forms", "activecampaign_get_forms_callback");
+add_action("wp_ajax_activecampaign_get_forms_html", "activecampaign_get_forms_html_callback");
 add_action("admin_enqueue_scripts", "activecampaign_custom_wp_admin_style");
 
 function activecampaign_javascript() {
@@ -581,26 +582,37 @@ function activecampaign_javascript() {
 	<script type="text/javascript">
 
 		var $AC = jQuery.noConflict();
+		var acwm = null;
 
 		function activecampaign_editor_form_embed(form_id) {
 			// puts the [activecampaign form=#] shortcode into the body of the post.
+			acwm.close(); // closes the pop-up modal.
 			var return_text = "[activecampaign form=" + form_id + "]";
-			tinymce.execCommand("mceInsertContent", 0, return_text);
-			$AC("#activecampaign_editor_forms").dialog("close");
+			//tinymce.execCommand("insertContent", 0, return_text);
+			tinyMCE.activeEditor.insertContent("test");
+			//$AC("#activecampaign_editor_forms").dialog("close");
 		}
 
 		function activecampaign_editor_form_dialog() {
 			// runs when you click the ActiveCampaign icon in the TinyMCE toolbar.
 
 			// shows the dialog to choose a form (after clicking the button in the editor).
-			$AC("#activecampaign_editor_forms").dialog({
+			/*$AC("#activecampaign_editor_forms").dialog({
 				title: "Insert ActiveCampaign Form",
 				width: 400
+			});*/
+
+			acwm = tinyMCE.activeEditor.windowManager.open({
+				title: "Insert ActiveCampaign Form",
+				url: ajaxurl + "?action=activecampaign_get_forms_html",
+				width: 400,
+				height: 300,
+				inline: 1
 			});
 
 		}
 
-		jQuery(document).ready(function($AC) {
+		/*jQuery(document).ready(function($AC) {
 
 			var editor_forms = "<div id='activecampaign_editor_forms' style='display: none;'></div>";
 
@@ -639,13 +651,14 @@ function activecampaign_javascript() {
 
 			$AC("body").append(editor_forms);
 
-		});
+		});*/
 
 	</script>
 	<?php
 }
 
-function activecampaign_get_forms_callback() {
+// get the raw forms data (array) for use in multiple spots.
+function activecampaign_get_forms_ajax() {
 	// get forms that are cached after setting things up from the ActiveCampaign settings page.
 	global $wpdb; // this is how you get access to the database
 	$forms = array();
@@ -658,8 +671,33 @@ function activecampaign_get_forms_callback() {
 			}
 		}
 	}
-	echo json_encode($forms);
-	die(); // this is required to return a proper result
+	return $forms;
+}
+
+// JSON output.
+function activecampaign_get_forms_callback() {
+	$forms = activecampaign_get_forms_ajax();
+	$forms = json_encode($forms);
+	echo $forms;
+	die();
+}
+
+// HTML output of forms (for the post dialog/window after you click the icon in the editor toolbar).
+function activecampaign_get_forms_html_callback() {
+	$forms = activecampaign_get_forms_ajax();
+	echo "<div style='font-family: Arial, Helvetica, sans-serif; font-size: 13px;'>";
+	echo "<p>" . __("Choose an integration form below to embed into your post or page body. Add or edit forms in ActiveCampaign and then refresh the forms on the <a href='" . get_site_url() . "/wp-admin/options-general.php?page=activecampaign'>Settings page</a>.") . "</p>";
+	if ($forms) {
+		echo "<ul style='list-style-type: none; padding: 0; margin: 0 0 0 5px;'>";
+	}
+	foreach ($forms as $formid => $formname) {
+		echo "<li style='margin-bottom: 8px;'><a href='#' onclick='parent.activecampaign_editor_form_embed(" . $formid . "); return false;'>" . $formname . "</a></li>";
+	}
+	if ($forms) {
+		echo "</ul>";
+	}
+	echo "</div>";
+	die();
 }
 
 function activecampaign_custom_wp_admin_style() {
