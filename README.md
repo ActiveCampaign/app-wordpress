@@ -103,7 +103,7 @@ Please make sure that your login information is correct, and that you have at le
 
 ### 5.5
 
-* Added site and event tracking. Lots of minor UI updates as well.
+* Added site and event tracking. Lots of minor UI updates as well. This coincided with WordPress version 3.9 release.
 
 ## Upgrade Notice
 

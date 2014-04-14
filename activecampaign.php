@@ -19,7 +19,7 @@ Author URI: http://www.activecampaign.com
 ## version 4.5: Added ActiveCampaign to the Settings menu so you can use the shortcode independent of the widget.
 ## version 5.0: Added support for multiple forms. Removed widget entirely.
 ## version 5.1: Added button to TinyMCE toolbar to more easily choose and embed the form shortcode into the post body.
-## version 5.5: Added site and event tracking. Lots of minor UI updates as well.
+## version 5.5: Added site and event tracking. Lots of minor UI updates as well. This coincided with WordPress version 3.9 release.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
