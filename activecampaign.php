@@ -253,15 +253,17 @@ function activecampaign_plugin_options() {
 						<div id="form_options_<?php echo $form["id"]; ?>" style="display: <?php echo $options_visibility; ?>; margin-left: 30px;">
 							<h4><?php echo __("Form Options", "menu-activecampaign"); ?></h4>
 							<p><i><?php echo __("Leave as default for normal behavior, or customize based on your needs.", "menu-activecampaign"); ?></i></p>
-							<input type="radio" name="syim[<?php echo $form["id"]; ?>]" id="activecampaign_form_swim_<?php echo $form["id"]; ?>" value="swim" <?php echo $settings_swim_checked; ?> onchange="swim_toggle(<?php echo $form["id"]; ?>, this.checked);" />
-							<label for="activecampaign_form_swim_<?php echo $form["id"]; ?>" style="">Add Subscriber</label>
-							<br />
-							<input type="radio" name="syim[<?php echo $form["id"]; ?>]" id="activecampaign_form_sync_<?php echo $form["id"]; ?>" value="sync" <?php echo $settings_sync_checked; ?> onchange="sync_toggle(<?php echo $form["id"]; ?>, this.checked);" />
-							<label for="activecampaign_form_sync_<?php echo $form["id"]; ?>" style="">Sync Subscriber</label>
-							<br />
-							<br />
+							<div style="display: none;">
+								<input type="radio" name="syim[<?php echo $form["id"]; ?>]" id="activecampaign_form_swim_<?php echo $form["id"]; ?>" value="swim" <?php echo $settings_swim_checked; ?> onchange="swim_toggle(<?php echo $form["id"]; ?>, this.checked);" />
+								<label for="activecampaign_form_swim_<?php echo $form["id"]; ?>" style="">Add Subscriber</label>
+								<br />
+								<input type="radio" name="syim[<?php echo $form["id"]; ?>]" id="activecampaign_form_sync_<?php echo $form["id"]; ?>" value="sync" <?php echo $settings_sync_checked; ?> onchange="sync_toggle(<?php echo $form["id"]; ?>, this.checked);" />
+								<label for="activecampaign_form_sync_<?php echo $form["id"]; ?>" style="">Sync Subscriber</label>
+								<br />
+								<br />
+							</div>
 							<input type="checkbox" name="ajax[<?php echo $form["id"]; ?>]" id="activecampaign_form_ajax_<?php echo $form["id"]; ?>" value="1" <?php echo $settings_ajax_checked; ?> onchange="ajax_toggle(<?php echo $form["id"]; ?>, this.checked);" />
-							<label for="activecampaign_form_ajax_<?php echo $form["id"]; ?>" style="">Process form using Ajax?</label>
+							<label for="activecampaign_form_ajax_<?php echo $form["id"]; ?>" style="">Submit form without refreshing page?</label>
 							<br />
 							<input type="checkbox" name="css[<?php echo $form["id"]; ?>]" id="activecampaign_form_css_<?php echo $form["id"]; ?>" value="1" <?php echo $settings_css_checked; ?> />
 							<label for="activecampaign_form_css_<?php echo $form["id"]; ?>" style="">Keep original form CSS?</label>
