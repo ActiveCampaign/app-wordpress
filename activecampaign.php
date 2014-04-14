@@ -612,47 +612,6 @@ function activecampaign_javascript() {
 
 		}
 
-		/*jQuery(document).ready(function($AC) {
-
-			var editor_forms = "<div id='activecampaign_editor_forms' style='display: none;'></div>";
-
-			var ajaxdata = {
-				action: "activecampaign_get_forms"
-				//whatever: 1234
-			};
-
-			$AC.ajax({
-				url: ajaxurl,
-				type: "GET",
-				data: ajaxdata,
-				error: function(jqXHR, textStatus, errorThrown) {
-					console.log(errorThrown);
-				},
-				success: function(data) {
-					data = JSON.parse(data);
-//console.log(data);
-//console.log(data.length);
-					if (typeof(data.length) == "undefined") {
-						// when there is data, data.length returns undefined for some reason.
-						var editor_forms = "<ul>";
-						for (var i in data) {
-							if (typeof(data[i]) != "function") {
-								editor_forms += "<li><a href='#' onclick='activecampaign_editor_form_embed(" + i + "); return false;'>" + data[i] + "</a></li>";
-							}
-						}
-						editor_forms += "</ul>";
-					}
-					else if (data.length == 0) {
-						var editor_forms = "<p><?php echo $no_forms1; ?> <a href='options-general.php?page=activecampaign'><?php echo $no_forms3; ?></a> <?php echo $no_forms2; ?>.</p>";
-					}
-					$AC("#activecampaign_editor_forms").html(editor_forms);
-				}
-			});
-
-			$AC("body").append(editor_forms);
-
-		});*/
-
 	</script>
 	<?php
 }
