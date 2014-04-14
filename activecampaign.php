@@ -596,12 +596,6 @@ function activecampaign_javascript() {
 		function activecampaign_editor_form_dialog() {
 			// runs when you click the ActiveCampaign icon in the TinyMCE toolbar.
 
-			// shows the dialog to choose a form (after clicking the button in the editor).
-			/*$AC("#activecampaign_editor_forms").dialog({
-				title: "Insert ActiveCampaign Form",
-				width: 400
-			});*/
-
 			acwm = tinyMCE.activeEditor.windowManager.open({
 				title: "Insert ActiveCampaign Form",
 				url: ajaxurl + "?action=activecampaign_get_forms_html",
