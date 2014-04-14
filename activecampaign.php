@@ -594,7 +594,8 @@ function activecampaign_javascript() {
 
 			// shows the dialog to choose a form (after clicking the button in the editor).
 			$AC("#activecampaign_editor_forms").dialog({
-				title: "Insert ActiveCampaign Form"
+				title: "Insert ActiveCampaign Form",
+				width: 400
 			});
 
 		}
