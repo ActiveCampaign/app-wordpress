@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/extend-wordpress.php
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/">ActiveCampaign Site and Event tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/">API credentials</a> in the plugin settings.
 Author: ActiveCampaign
-Version: 5.1
+Version: 5.5
 Author URI: http://www.activecampaign.com
 */
 
@@ -19,6 +19,7 @@ Author URI: http://www.activecampaign.com
 ## version 4.5: Added ActiveCampaign to the Settings menu so you can use the shortcode independent of the widget.
 ## version 5.0: Added support for multiple forms. Removed widget entirely.
 ## version 5.1: Added button to TinyMCE toolbar to more easily choose and embed the form shortcode into the post body.
+## version 5.5: Added site and event tracking. Lots of minor UI updates as well.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");

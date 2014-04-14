@@ -101,6 +101,10 @@ Please make sure that your login information is correct, and that you have at le
 
 * Added button to TinyMCE toolbar to more easily choose and embed the form shortcode into the post body.
 
+### 5.5
+
+* Added site and event tracking. Lots of minor UI updates as well.
+
 ## Upgrade Notice
 
 ### 1.1

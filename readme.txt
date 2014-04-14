@@ -2,7 +2,7 @@
 Contributors: activecampaign
 Tags: activecampaign, subscribe, email, newsletter, signup, marketing, plugin, widget, sidebar
 Requires at least: 2
-Tested up to: 3.8
+Tested up to: 3.9
 Stable tag: trunk
 
 Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed [ActiveCampaign Site and Event tracking](http://www.activecampaign.com/help/site-event-tracking/) code in your pages. To get started, please activate the plugin and add your [API credentials](http://www.activecampaign.com/help/using-the-api/) in the plugin settings.
@@ -95,6 +95,9 @@ Please make sure that your login information is correct, and that you have at le
 
 = 5.1 =
 * Added button to TinyMCE toolbar to more easily choose and embed the form shortcode into the post body.
+
+= 5.5 =
+* Added site and event tracking. Lots of minor UI updates as well.
 
 == Upgrade Notice ==
 
