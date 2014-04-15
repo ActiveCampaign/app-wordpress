@@ -570,46 +570,19 @@ add_filter("widget_text", "do_shortcode");
 
 global $pagenow;
 if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
-	add_action("admin_footer", "activecampaign_javascript");
+	// this loads the JavaScript file on pages where we use it (any post page that uses the Editor).
+	wp_enqueue_script("editor_pages", get_site_url() . "/wp-content/plugins/activecampaign-subscription-forms/editor_pages.js", array(), false, true);
+	// any data we need to access in JavaScript.
+	$data = array(
+		"site_url" => __(site_url()),
+		"wp_version" => $wp_version,
+	);
+	wp_localize_script("editor_pages", "php_data", $data);
 }
 
 add_action("wp_ajax_activecampaign_get_forms", "activecampaign_get_forms_callback");
 add_action("wp_ajax_activecampaign_get_forms_html", "activecampaign_get_forms_html_callback");
 add_action("admin_enqueue_scripts", "activecampaign_custom_wp_admin_style");
-
-function activecampaign_javascript() {
-	$no_forms1 = __("No forms chosen yet. Go to the", "activecampaign-subscription-forms");
-	$no_forms2 = __("to choose your forms", "activecampaign-subscription-forms");
-	$no_forms3 = __("ActiveCampaign Settings page", "activecampaign-subscription-forms");
-	?>
-	<script type="text/javascript">
-
-		var $AC = jQuery.noConflict();
-		var acwm = null;
-
-		function activecampaign_editor_form_embed(form_id) {
-			// puts the [activecampaign form=#] shortcode into the body of the post.
-			acwm.close(); // closes the pop-up modal.
-			var return_text = "[activecampaign form=" + form_id + "]";
-			tinyMCE.activeEditor.insertContent(return_text);
-		}
-
-		function activecampaign_editor_form_dialog() {
-			// runs when you click the ActiveCampaign icon in the TinyMCE toolbar.
-
-			acwm = tinyMCE.activeEditor.windowManager.open({
-				title: "Insert ActiveCampaign Form",
-				url: ajaxurl + "?action=activecampaign_get_forms_html",
-				width: 400,
-				height: 300,
-				inline: 1
-			});
-
-		}
-
-	</script>
-	<?php
-}
 
 // get the raw forms data (array) for use in multiple spots.
 function activecampaign_get_forms_ajax() {
@@ -637,6 +610,7 @@ function activecampaign_get_forms_callback() {
 }
 
 // HTML output of forms (for the post dialog/window after you click the icon in the editor toolbar).
+// version 3.9 has this.
 function activecampaign_get_forms_html_callback() {
 	$forms = activecampaign_get_forms_ajax();
 	echo "<div style='font-family: Arial, Helvetica, sans-serif; font-size: 13px;'>";
