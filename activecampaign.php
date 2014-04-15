@@ -591,9 +591,7 @@ function activecampaign_javascript() {
 			// puts the [activecampaign form=#] shortcode into the body of the post.
 			acwm.close(); // closes the pop-up modal.
 			var return_text = "[activecampaign form=" + form_id + "]";
-			//tinymce.execCommand("insertContent", 0, return_text);
-			tinyMCE.activeEditor.insertContent("test");
-			//$AC("#activecampaign_editor_forms").dialog("close");
+			tinyMCE.activeEditor.insertContent(return_text);
 		}
 
 		function activecampaign_editor_form_dialog() {
