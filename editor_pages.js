@@ -41,7 +41,6 @@ jQuery(document).ready(function($AC) {
 
 		var ajaxdata = {
 			action: "activecampaign_get_forms"
-			//whatever: 1234
 		};
 
 		$AC.ajax({
@@ -64,7 +63,7 @@ jQuery(document).ready(function($AC) {
 					editor_forms += "</ul>";
 				}
 				else if (data.length == 0) {
-					var editor_forms = "<p><?php echo $no_forms1; ?> <a href='options-general.php?page=activecampaign'><?php echo $no_forms3; ?></a> <?php echo $no_forms2; ?>.</p>";
+					var editor_forms = "<p>No forms chosen yet. Go to the <a href='options-general.php?page=activecampaign'>ActiveCampaign Settings page</a> to choose your forms.</p>";
 				}
 				$AC("#activecampaign_editor_forms").html(editor_forms);
 			}
