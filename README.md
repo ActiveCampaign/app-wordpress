@@ -1,6 +1,6 @@
 ## ActiveCampaign WordPress Plugin
 
-Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed [ActiveCampaign Site and Event tracking](http://www.activecampaign.com/help/site-event-tracking/) code in your pages. To get started, please activate the plugin and add your [API credentials](http://www.activecampaign.com/help/using-the-api/) in the plugin settings.
+Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed [ActiveCampaign site tracking](http://www.activecampaign.com/help/site-event-tracking/) code in your pages. To get started, please activate the plugin and add your [API credentials](http://www.activecampaign.com/help/using-the-api/) in the plugin settings.
 
 ## Description
 
@@ -103,7 +103,7 @@ Please make sure that your login information is correct, and that you have at le
 
 ### 5.5
 
-* Added site and event tracking. Lots of minor UI updates as well. This coincided with WordPress version 3.9 release.
+* Default form behavior is now "sync." Added site tracking. Lots of minor UI updates as well. This coincided with WordPress version 3.9 release.
 
 ## Upgrade Notice
 
@@ -126,3 +126,7 @@ Please make sure that your login information is correct, and that you have at le
 ### 5.0
 
 * The widget is removed entirely (in favor of the shortcode) so if you have a form in a sidebar, you'll now need to add a basic text widget with the shortcode in it. You choose your forms under the ActiveCampaign settings section.
+
+### 5.5
+
+* Default behavior of the form is now "sync" (add or update). If you had "Add Subscriber" chosen it will now perform "add or update." If you had "Sync Subscriber" chosen the behavior will remain the same.
