@@ -2,10 +2,14 @@
 
 class AC_Form extends ActiveCampaign {
 
+	public $version;
+	public $url_base;
 	public $url;
 	public $api_key;
 
-	function __construct($url, $api_key) {
+	function __construct($version, $url_base, $url, $api_key) {
+		$this->version = $version;
+		$this->url_base = $url_base;
 		$this->url = $url;
 		$this->api_key = $api_key;
 	}
@@ -151,6 +155,7 @@ var \$j = jQuery.noConflict();
 
 		$formid = $_POST["f"];
 		$email = $_POST["email"];
+		$phone = $_POST["phone"];
 
 		if (isset($_POST["fullname"])) {
 			$fullname = explode(" ", $_POST["fullname"]);
@@ -171,6 +176,7 @@ var \$j = jQuery.noConflict();
 			"email" => $email,
 			"first_name" => $firstname,
 			"last_name" => $lastname,
+			"phone" => $phone,
 		);
 
 		foreach ($fields as $ac_field_id => $field_value) {
