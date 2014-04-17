@@ -271,10 +271,10 @@ function activecampaign_plugin_options() {
 								<br />
 							</div>
 							<input type="checkbox" name="ajax[<?php echo $form["id"]; ?>]" id="activecampaign_form_ajax_<?php echo $form["id"]; ?>" value="1" <?php echo $settings_ajax_checked; ?> onchange="ajax_toggle(<?php echo $form["id"]; ?>, this.checked);" />
-							<label for="activecampaign_form_ajax_<?php echo $form["id"]; ?>" style="">Submit form without refreshing page?</label>
+							<label for="activecampaign_form_ajax_<?php echo $form["id"]; ?>" style="">Submit form without refreshing page</label>
 							<br />
 							<input type="checkbox" name="css[<?php echo $form["id"]; ?>]" id="activecampaign_form_css_<?php echo $form["id"]; ?>" value="1" <?php echo $settings_css_checked; ?> />
-							<label for="activecampaign_form_css_<?php echo $form["id"]; ?>" style="">Keep original form CSS?</label>
+							<label for="activecampaign_form_css_<?php echo $form["id"]; ?>" style="">Keep original form CSS</label>
 							<br />
 							<br />
 							<label for="activecampaign_form_action_<?php echo $form["id"]; ?>" style="">Custom form <code>action</code> URL</label>
@@ -289,8 +289,9 @@ function activecampaign_plugin_options() {
 					?>
 
 					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin: 30px 0 20px 0;" />
-					<input type="checkbox" name="site_tracking" id="activecampaign_site_tracking" value="1" <?php echo $settings_st_checked; ?> />
+					<input type="checkbox" name="site_tracking" id="activecampaign_site_tracking" value="1" <?php echo $settings_st_checked; ?> onchange="site_tracking_toggle(this.checked);" />
 					<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking?", "menu-activecampaign"); ?></label>
+					(<a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">?</a>)
 
 					<script type='text/javascript'>
 
@@ -327,10 +328,10 @@ function activecampaign_plugin_options() {
 							var ajax_checkbox = document.getElementById("activecampaign_form_ajax_" + form_id);
 							var sync_radio = document.getElementById("activecampaign_form_sync_" + form_id);
 							var action_textbox = document.getElementById("activecampaign_form_action_" + form_id);
-							if ( !ajax_checked && sync_radio.checked && (!action_textbox.value || !ac_str_is_url(action_textbox.value)) )  {
-								// if Sync is checked, and action value is empty or invalid, and they UNcheck Ajax, alert them.
-								//alert("If you use Sync, you need to use either the Ajax option, or your own custom action URL.");
-								//ajax_checkbox.checked = true;
+							var site_tracking_checkbox = document.getElementById("activecampaign_site_tracking");
+							if (ajax_checked && site_tracking_checkbox.checked)  {
+								alert("If you use this option, site tracking cannot be enabled.");
+								site_tracking_checkbox.checked = false;
 							}
 						}
 
@@ -338,6 +339,32 @@ function activecampaign_plugin_options() {
 							var action_textbox = document.getElementById("activecampaign_form_action_" + form_id);
 							if (action_textbox.value && ac_str_is_url(action_textbox.value)) {
 
+							}
+						}
+
+						function site_tracking_toggle(is_checked) {
+							// we can't allow site tracking if ajax is used because that uses the API.
+							// so here we check to see if they have chosen ajax for any form, an if so alert them and uncheck the ajax options.
+							if (is_checked)  {
+								var inputs = document.getElementsByTagName("input");
+								// if Sync is checked, and action value is empty or invalid, and they UNcheck Ajax, alert them.
+								var checked_already = [];
+								for (var i in inputs) {
+									var c = inputs[i];
+									if (c.type == "checkbox" && c.name.match(/^ajax\[/) && c.checked) {;
+										// example: <input type="checkbox" name="ajax[1642]" id="activecampaign_form_ajax_1642" value="1" checked="checked" onchange="ajax_toggle(1642, this.checked);">
+										checked_already.push(c.id);
+									}
+								}
+								if (checked_already.length) {
+									// if at least one of the ajax checkboxes is checked.
+									alert("If you enable site tracking, a page refresh is required.");
+									for (var i in checked_already) {
+										var id = checked_already[i];
+										var dom_item = document.getElementById(id);
+										dom_item.checked = false;
+									}
+								}
 							}
 						}
 
