@@ -9,7 +9,7 @@ Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Al
 
 == Description ==
 
-Connect your WordPress blog with your ActiveCampaign email marketing platform. Embed subscription forms designed in ActiveCampaign directly into any post, page, or sidebar.
+Connect your WordPress blog with your ActiveCampaign email marketing platform. Embed subscription forms designed in ActiveCampaign directly into any post, page, or sidebar. Also allows you to enable [ActiveCampaign site tracking](http://www.activecampaign.com/help/site-event-tracking/) with your Wordpress blog.
 
 After installing go to Settings > ActiveCampaign to activate this plugin. You will need your [ActiveCampaign API URL and key](http://www.activecampaign.com/help/using-the-api/), and at least one integration form created in your ActiveCampaign account.
 
