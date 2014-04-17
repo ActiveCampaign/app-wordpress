@@ -19,7 +19,8 @@ Author URI: http://www.activecampaign.com
 ## version 4.5: Added ActiveCampaign to the Settings menu so you can use the shortcode independent of the widget.
 ## version 5.0: Added support for multiple forms. Removed widget entirely.
 ## version 5.1: Added button to TinyMCE toolbar to more easily choose and embed the form shortcode into the post body.
-## version 5.5: Default form behavior is now "sync." Added site tracking. Lots of minor UI updates as well. This coincided with WordPress version 3.9 release.
+## version 5.2: Default form behavior is now "sync." This coincided with WordPress version 3.9 release.
+## version 5.5: Added site tracking.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -90,6 +91,10 @@ function activecampaign_plugin_options() {
 				$account = $ac->api("account/view");
 				$domain = (isset($account->cname) && $account->cname) ? $account->cname : $account->account;
 				$instance["account"] = $domain;
+
+				$user_me = $ac->api("user/me");
+				// the tracking ID from the Integrations page.
+				$instance["tracking_actid"] = $user_me->trackid;
 
 				// get forms.
 				$instance = activecampaign_getforms($ac, $instance);
@@ -217,6 +222,8 @@ function activecampaign_plugin_options() {
 					// just a flag to know if ANY form is checked (chosen)
 					$form_checked = 0;
 
+					$settings_st_checked = (isset($instance["site_tracking"]) && (int)$instance["site_tracking"]) ? "checked=\"checked\"" : "";
+
 					foreach ($instance["forms"] as $form) {
 
 						// $instance["form_id"] is an array of form ID's (since we allow multiple now).
@@ -281,6 +288,10 @@ function activecampaign_plugin_options() {
 
 					?>
 
+					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin: 30px 0 20px 0;" />
+					<input type="checkbox" name="site_tracking" id="activecampaign_site_tracking" value="1" <?php echo $settings_st_checked; ?> />
+					<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking?", "menu-activecampaign"); ?></label>
+
 					<script type='text/javascript'>
 
 						// shows or hides the sub-options section beneath each form checkbox.
@@ -318,8 +329,8 @@ function activecampaign_plugin_options() {
 							var action_textbox = document.getElementById("activecampaign_form_action_" + form_id);
 							if ( !ajax_checked && sync_radio.checked && (!action_textbox.value || !ac_str_is_url(action_textbox.value)) )  {
 								// if Sync is checked, and action value is empty or invalid, and they UNcheck Ajax, alert them.
-								alert("If you use Sync, you need to use either the Ajax option, or your own custom action URL.");
-								ajax_checkbox.checked = true;
+								//alert("If you use Sync, you need to use either the Ajax option, or your own custom action URL.");
+								//ajax_checkbox.checked = true;
 							}
 						}
 
@@ -583,6 +594,7 @@ if (in_array($pagenow, array('post.php', 'page.php', 'post-new.php', 'post-edit.
 add_action("wp_ajax_activecampaign_get_forms", "activecampaign_get_forms_callback");
 add_action("wp_ajax_activecampaign_get_forms_html", "activecampaign_get_forms_html_callback");
 add_action("admin_enqueue_scripts", "activecampaign_custom_wp_admin_style");
+add_action("wp_enqueue_scripts", "activecampaign_frontend_scripts");
 
 // get the raw forms data (array) for use in multiple spots.
 function activecampaign_get_forms_ajax() {
@@ -633,6 +645,18 @@ function activecampaign_custom_wp_admin_style() {
 	wp_enqueue_style("activecampaign-subscription-forms");
 	wp_enqueue_script("jquery-ui-dialog");
 	wp_enqueue_style("wp-jquery-ui-dialog");
+}
+
+// scripts run only on the front-end.
+function activecampaign_frontend_scripts() {
+	wp_enqueue_script("site_tracking", get_site_url() . "/wp-content/plugins/activecampaign-subscription-forms/site_tracking.js", array(), false, true);
+	$settings = get_option("settings_activecampaign");
+	// any data we need to access in JavaScript.
+	$data = array(
+		"site_url" => __(site_url()),
+		"ac_settings" => $settings,
+	);
+	wp_localize_script("site_tracking", "php_data", $data);
 }
 
 ?>

@@ -20,6 +20,7 @@ This section describes how to install the plugin and get it working. Please see 
 4. Choose which subscription forms to cache locally, any optional sub-settings for each, then hit Update again.
 5. Use `[activecampaign form=ID]` shortcode to display a form anywhere on your site where shortcode syntax is supported.
 6. Embed multiple forms onto a single page!
+7. Enable site tracking to have page visits tracked to ActiveCampaign.
 
 ## Frequently Asked Questions
 
@@ -101,9 +102,13 @@ Please make sure that your login information is correct, and that you have at le
 
 * Added button to TinyMCE toolbar to more easily choose and embed the form shortcode into the post body.
 
+### 5.2
+
+* Default form behavior is now "sync." This coincided with WordPress version 3.9 release.
+
 ### 5.5
 
-* Default form behavior is now "sync." Added site tracking. Lots of minor UI updates as well. This coincided with WordPress version 3.9 release.
+* Added site tracking (optional setting).
 
 ## Upgrade Notice
 
@@ -127,6 +132,10 @@ Please make sure that your login information is correct, and that you have at le
 
 * The widget is removed entirely (in favor of the shortcode) so if you have a form in a sidebar, you'll now need to add a basic text widget with the shortcode in it. You choose your forms under the ActiveCampaign settings section.
 
-### 5.5
+### 5.2
 
 * Default behavior of the form is now "sync" (add or update). If you had "Add Subscriber" chosen it will now perform "add or update." If you had "Sync Subscriber" chosen the behavior will remain the same.
+
+### 5.5
+
+* If site tracking is enabled it will embed some JavaScript code on each of your front-end pages.
