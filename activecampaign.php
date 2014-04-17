@@ -290,7 +290,7 @@ function activecampaign_plugin_options() {
 
 					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin: 30px 0 20px 0;" />
 					<input type="checkbox" name="site_tracking" id="activecampaign_site_tracking" value="1" <?php echo $settings_st_checked; ?> onchange="site_tracking_toggle(this.checked);" />
-					<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking?", "menu-activecampaign"); ?></label>
+					<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
 					(<a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">?</a>)
 
 					<script type='text/javascript'>
