@@ -255,7 +255,7 @@ function activecampaign_plugin_options() {
 						<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin: 30px 0 20px 0;" />
 
 						<input type="checkbox" name="form_id[]" id="activecampaign_form_<?php echo $form["id"]; ?>" value="<?php echo $form["id"]; ?>" onclick="toggle_form_options(this.value, this.checked);" <?php echo $checked; ?> />
-						<label for="activecampaign_form_<?php echo $form["id"]; ?>"><?php echo $form["name"]; ?> (ID: <?php echo $form["id"]; ?>)</label>
+						<label for="activecampaign_form_<?php echo $form["id"]; ?>"><a href="http://<?php echo $instance["account"]; ?>/admin/main.php?action=form_edit&id=<?php echo $form["id"]; ?>" target="_blank"><?php echo $form["name"]; ?></a></label>
 						<br />
 						
 						<div id="form_options_<?php echo $form["id"]; ?>" style="display: <?php echo $options_visibility; ?>; margin-left: 30px;">
@@ -653,7 +653,7 @@ function activecampaign_get_forms_callback() {
 function activecampaign_get_forms_html_callback() {
 	$forms = activecampaign_get_forms_ajax();
 	echo "<div style='font-family: Arial, Helvetica, sans-serif; font-size: 13px;'>";
-	echo "<p>" . __("Choose an integration form below to embed into your post or page body. Add or edit forms in ActiveCampaign and then refresh the forms on the <a href='" . get_site_url() . "/wp-admin/options-general.php?page=activecampaign'>Settings page</a>.") . "</p>";
+	echo "<p>" . __("Choose an integration form below to embed into your post or page body. Add or edit forms in ActiveCampaign and then refresh the forms on the <a href='" . get_site_url() . "/wp-admin/options-general.php?page=activecampaign' target='_blank'>Settings page</a>.") . "</p>";
 	if ($forms) {
 		echo "<ul style='list-style-type: none; padding: 0; margin: 0 0 0 5px;'>";
 	}
