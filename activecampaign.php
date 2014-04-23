@@ -214,8 +214,7 @@ function activecampaign_plugin_options() {
 					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 30px;" />
 
 					<h3><?php echo __("Subscription Forms", "menu-activecampaign"); ?></h3>
-
-					<p><i><?php echo __("Choose subscription forms to cache locally. To add new forms go to your ActiveCampaign > Integration section.", "menu-activecampaign"); ?></i></p>
+					<p><i><?php echo __("Choose subscription forms to cache locally. To add new forms go to your <a href=\"http://" . $instance["account"] . "/admin/main.php?action=form\" target=\"_blank\">ActiveCampaign > Integration section</a>.", "menu-activecampaign"); ?></i></p>
 
 					<?php
 
@@ -289,6 +288,10 @@ function activecampaign_plugin_options() {
 					?>
 
 					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin: 30px 0 20px 0;" />
+
+					<h3><?php echo __("Site Tracking", "menu-activecampaign"); ?></h3>
+					<p><i><?php echo __("Site tracking lets you record visitor history on your site to use for targeted segmenting. Learn more on the <a href=\"http://" . $instance["account"] . "/track/\" target=\"_blank\">ActiveCampaign > Integration section</a>.", "menu-activecampaign"); ?></i></p>
+
 					<input type="checkbox" name="site_tracking" id="activecampaign_site_tracking" value="1" <?php echo $settings_st_checked; ?> onchange="site_tracking_toggle(this.checked);" />
 					<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
 					(<a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">?</a>)
