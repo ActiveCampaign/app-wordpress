@@ -1,6 +1,6 @@
 === ActiveCampaign ===
 Contributors: activecampaign
-Tags: activecampaign, subscribe, email, newsletter, signup, marketing, plugin, widget, sidebar
+Tags: activecampaign, email marketing, newsletter, marketing automation, subscribe, forms, emails, automation
 Requires at least: 2
 Tested up to: 3.9
 Stable tag: trunk
