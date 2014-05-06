@@ -1,4 +1,3 @@
-var $AC = jQuery.noConflict();
 var acwm = null;
 var wp_version = php_data.wp_version;
 var wp_version_3_8 = wp_version.match(/^3\.8/);
@@ -8,7 +7,7 @@ function activecampaign_editor_form_embed(form_id) {
 	if (wp_version_3_8) {
 		var return_text = "[activecampaign form=" + form_id + "]";
 		tinymce.execCommand("mceInsertContent", 0, return_text);
-		$AC("#activecampaign_editor_forms").dialog("close");
+		$("#activecampaign_editor_forms").dialog("close");
 	} else {
 		acwm.close(); // closes the pop-up modal.
 		var return_text = "[activecampaign form=" + form_id + "]";
@@ -19,7 +18,7 @@ function activecampaign_editor_form_embed(form_id) {
 function activecampaign_editor_form_dialog() {
 	// runs when you click the ActiveCampaign icon in the TinyMCE toolbar.
 	if (wp_version_3_8) {
-		$AC("#activecampaign_editor_forms").dialog({
+		$("#activecampaign_editor_forms").dialog({
 			title: "Insert ActiveCampaign Form"
 		});
 	} else {
@@ -33,7 +32,7 @@ function activecampaign_editor_form_dialog() {
 	}
 }
 
-jQuery(document).ready(function($AC) {
+jQuery(document).ready(function($) {
 
 	if (wp_version_3_8) {
 
@@ -43,7 +42,7 @@ jQuery(document).ready(function($AC) {
 			action: "activecampaign_get_forms"
 		};
 
-		$AC.ajax({
+		$.ajax({
 			url: ajaxurl,
 			type: "GET",
 			data: ajaxdata,
@@ -65,11 +64,11 @@ jQuery(document).ready(function($AC) {
 				else if (data.length == 0) {
 					var editor_forms = "<p>No forms chosen yet. Go to the <a href='options-general.php?page=activecampaign'>ActiveCampaign Settings page</a> to choose your forms.</p>";
 				}
-				$AC("#activecampaign_editor_forms").html(editor_forms);
+				$("#activecampaign_editor_forms").html(editor_forms);
 			}
 		});
 
-		$AC("body").append(editor_forms);
+		$("body").append(editor_forms);
 
 	}
 
