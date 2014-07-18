@@ -146,4 +146,4 @@ Please make sure that your login information is correct, and that you have at le
 
 ### 5.6
 
-* UPGRADE IMMEDIATELY - security bug patched (involving the API key being exposed).
+* UPGRADE IMMEDIATELY - security bug patched (involving the API key being exposed). After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
