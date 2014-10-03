@@ -114,6 +114,10 @@ Please make sure that your login information is correct, and that you have at le
 
 * Patched major security bug.
 
+### 5.7
+
+* Removed ability to add custom form "action" URL.
+
 ## Upgrade Notice
 
 ### 1.1
@@ -147,3 +151,7 @@ Please make sure that your login information is correct, and that you have at le
 ### 5.6
 
 * UPGRADE IMMEDIATELY - security bug patched (involving the API key being exposed). After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
+
+### 5.7
+
+* Custom form "action" URL's will no longer work.

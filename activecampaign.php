@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/extend-wordpress.php
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 5.6
+Version: 5.7
 Author URI: http://www.activecampaign.com
 */
 
@@ -22,6 +22,7 @@ Author URI: http://www.activecampaign.com
 ## version 5.2: Default form behavior is now "sync." This coincided with WordPress version 3.9 release.
 ## version 5.5: Added site tracking.
 ## version 5.6: Patched major security bug.
+## version 5.7: Removed ability to add custom form "action" URL.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -275,11 +276,6 @@ function activecampaign_plugin_options() {
 							<br />
 							<input type="checkbox" name="css[<?php echo $form["id"]; ?>]" id="activecampaign_form_css_<?php echo $form["id"]; ?>" value="1" <?php echo $settings_css_checked; ?> />
 							<label for="activecampaign_form_css_<?php echo $form["id"]; ?>" style="">Keep original form CSS</label>
-							<br />
-							<br />
-							<label for="activecampaign_form_action_<?php echo $form["id"]; ?>" style="">Custom form <code>action</code> URL</label>
-							<br />
-							<input type="text" name="action[<?php echo $form["id"]; ?>]" id="activecampaign_form_action_<?php echo $form["id"]; ?>" value="<?php echo $settings_action_value; ?>" onkeyup="action_toggle(<?php echo $form["id"]; ?>, this.value);" style="width: 400px;" />
 						</div>
 						
 						<?php
