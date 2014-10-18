@@ -684,7 +684,7 @@ function activecampaign_backend_scripts() {
 		// any data we need to access in JavaScript.
 		$data = array(
 			"site_url" => __(site_url()),
-			"wp_version" => $wp_version,
+			"wp_version" => $GLOBALS["wp_version"],
 		);
 		wp_localize_script("editor_pages", "php_data", $data);
 	}	
