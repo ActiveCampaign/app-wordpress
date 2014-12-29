@@ -2,7 +2,7 @@
 Contributors: activecampaign
 Tags: activecampaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation
 Requires at least: 2
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: trunk
 
 Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to enable ActiveCampaign site tracking for your WordPress blog.
@@ -111,6 +111,9 @@ Please make sure that your login information is correct, and that you have at le
 
 = 5.8 =
 * Security fix.
+
+= 5.9 =
+* Use current user's email for site tracking.
 
 == Upgrade Notice ==
 

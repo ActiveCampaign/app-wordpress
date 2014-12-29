@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/extend-wordpress.php
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 5.8
+Version: 5.9
 Author URI: http://www.activecampaign.com
 */
 
@@ -24,6 +24,7 @@ Author URI: http://www.activecampaign.com
 ## version 5.6: Patched major security bug.
 ## version 5.7: Removed ability to add custom form "action" URL.
 ## version 5.8: Security fix.
+## version 5.9: Use current user's email for site tracking.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -672,10 +673,16 @@ function activecampaign_frontend_scripts() {
 	$settings = get_option("settings_activecampaign");
 	unset($settings["api_url"]);
 	unset($settings["api_key"]);
+	$current_user = wp_get_current_user();
+	$user_email = "";
+	if (isset($current_user->data->user_email)) {
+		$user_email = $current_user->data->user_email;
+	}
 	// any data we need to access in JavaScript.
 	$data = array(
 		"site_url" => __(site_url()),
 		"ac_settings" => $settings,
+		"user_email" => $user_email,
 	);
 	wp_localize_script("site_tracking", "php_data", $data);
 }

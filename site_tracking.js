@@ -1,5 +1,5 @@
 if (typeof(php_data.ac_settings.site_tracking) != "undefined" && php_data.ac_settings.site_tracking == "1") {
-	var trackcmp_email = '';
+	var trackcmp_email = php_data.user_email;
 	var trackcmp = document.createElement("script");
 	trackcmp.async = true;
 	trackcmp.type = 'text/javascript';
