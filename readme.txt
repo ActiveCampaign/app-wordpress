@@ -146,3 +146,6 @@ Please make sure that your login information is correct, and that you have at le
 
 = 5.8 =
 * UPGRADE IMMEDIATELY - security fix. After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
+
+= 5.9 =
+* Site tracking users: the current logged-in user will now be associated with each page visit.
