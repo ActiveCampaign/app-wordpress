@@ -477,7 +477,7 @@ function activecampaign_form_html($ac, $instance) {
 					// if they are using Ajax, but have not provided a custom action URL, we need to push it to a script where we can submit the form/process API request.
 					// remove the "http(s)" portion, because it was conflicting with the Ajax request (I was getting 404's).
 					$api_url_process = preg_replace("/https:\/\//", "", $instance["api_url"]);
-					$form_embed_params["action"] = get_site_url() . "/wp-content/plugins/activecampaign-subscription-forms/form_process.php?sync=" . $sync;
+					$form_embed_params["action"] = plugins_url("form_process.php?sync=" . $sync, __FILE__);
 				}
 
 				// prepare the params for the API call
@@ -593,7 +593,7 @@ function activecampaign_editor_buttons() {
 }
 
 function activecampaign_add_buttons($plugin_array) {
-	$plugin_array["activecampaign_editor_buttons"] = get_site_url() . "/wp-content/plugins/activecampaign-subscription-forms/editor_buttons.js";
+	$plugin_array["activecampaign_editor_buttons"] = plugins_url("editor_buttons.js", __FILE__);
 	return $plugin_array;
 }
 
@@ -669,7 +669,7 @@ function activecampaign_custom_wp_admin_style() {
 
 // scripts run only on the front-end.
 function activecampaign_frontend_scripts() {
-	wp_enqueue_script("site_tracking", get_site_url() . "/wp-content/plugins/activecampaign-subscription-forms/site_tracking.js", array(), false, true);
+	wp_enqueue_script("site_tracking", plugins_url("site_tracking.js", __FILE__), array(), false, true);
 	$settings = get_option("settings_activecampaign");
 	unset($settings["api_url"]);
 	unset($settings["api_key"]);
@@ -690,7 +690,7 @@ function activecampaign_frontend_scripts() {
 function activecampaign_backend_scripts() {
 	if (in_array($GLOBALS["pagenow"], array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
 		// this loads the JavaScript file on pages where we use it (any post page that uses the Editor).
-		wp_enqueue_script("editor_pages", get_site_url() . "/wp-content/plugins/activecampaign-subscription-forms/editor_pages.js", array(), false, true);
+		wp_enqueue_script("editor_pages", plugins_url("editor_pages.js", __FILE__), array(), false, true);
 		// any data we need to access in JavaScript.
 		$data = array(
 			"site_url" => __(site_url()),
