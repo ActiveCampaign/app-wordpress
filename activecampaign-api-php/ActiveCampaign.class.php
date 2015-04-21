@@ -20,7 +20,7 @@ class ActiveCampaign extends AC_Connector {
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		$this->url_base = $this->url = $url;
 		$this->api_key = $api_key;
-		AC_Connector::__construct($url, $api_key, $api_user, $api_pass);
+		parent::__construct($url, $api_key, $api_user, $api_pass);
 	}
 
 	function version($version) {
@@ -110,13 +110,16 @@ class ActiveCampaign extends AC_Connector {
 
 require_once("Account.class.php");
 require_once("Auth.class.php");
+require_once("Automation.class.php");
 require_once("Campaign.class.php");
 require_once("Contact.class.php");
+require_once("Deal.class.php");
 require_once("Design.class.php");
 require_once("Form.class.php");
 require_once("Group.class.php");
 require_once("List.class.php");
 require_once("Message.class.php");
+require_once("Settings.class.php");
 require_once("Subscriber.class.php");
 require_once("Tracking.class.php");
 require_once("User.class.php");
