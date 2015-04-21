@@ -80,7 +80,7 @@ function activecampaign_plugin_options() {
 
 		if ($_POST["api_url"] && $_POST["api_key"]) {
 
-			$ac = new ActiveCampaign($_POST["api_url"], $_POST["api_key"]);
+			$ac = new ActiveCampaignWordPress($_POST["api_url"], $_POST["api_key"]);
 
 			if (!(int)$ac->credentials_test()) {
 				echo "<p style='color: red; font-weight: bold;'>" . __("Access denied: Invalid credentials (URL and/or API key).", "menu-activecampaign") . "</p>";
