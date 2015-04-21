@@ -202,7 +202,7 @@ class AC_ConnectorWordPress {
 			echo "<textarea style='height: 300px; width: 600px;'>" . $debug_str1 . "</textarea>";
 		}
 
-		header("HTTP/1.1 " . $http_code);
+		//header("HTTP/1.1 " . $http_code);
 		$object->http_code = $http_code;
 
 		if (isset($object->result_code)) {
