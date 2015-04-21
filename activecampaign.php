@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/extend-wordpress.php
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 5.9
+Version: 5.91
 Author URI: http://www.activecampaign.com
 */
 
@@ -25,6 +25,7 @@ Author URI: http://www.activecampaign.com
 ## version 5.7: Removed ability to add custom form "action" URL.
 ## version 5.8: Security fix.
 ## version 5.9: Use current user's email for site tracking.
+## version 5.91: Updates to avoid conflicts with other plugins using the ActiveCampaign PHP API wrapper.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");

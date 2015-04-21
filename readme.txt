@@ -115,6 +115,9 @@ Please make sure that your login information is correct, and that you have at le
 = 5.9 =
 * Use current user's email for site tracking.
 
+= 5.91 =
+* Updates to avoid conflicts with other plugins using the ActiveCampaign PHP API wrapper.
+
 == Upgrade Notice ==
 
 = 1.1 =

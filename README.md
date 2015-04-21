@@ -118,6 +118,18 @@ Please make sure that your login information is correct, and that you have at le
 
 * Removed ability to add custom form "action" URL.
 
+### 5.8
+
+* Security fix.
+
+### 5.9
+
+* Use current user's email for site tracking.
+
+### 5.91
+
+* Updates to avoid conflicts with other plugins using the ActiveCampaign PHP API wrapper.
+
 ## Upgrade Notice
 
 ### 1.1
@@ -155,3 +167,11 @@ Please make sure that your login information is correct, and that you have at le
 ### 5.7
 
 * Custom form "action" URL's will no longer work.
+
+### 5.8
+
+* UPGRADE IMMEDIATELY - security fix. After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
+
+### 5.9
+
+* Site tracking users: the current logged-in user will now be associated with each page visit.
