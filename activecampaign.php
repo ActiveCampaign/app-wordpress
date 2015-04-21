@@ -28,7 +28,7 @@ Author URI: http://www.activecampaign.com
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
-require_once "activecampaign-api-php/ActiveCampaign.class.php";
+require_once(dirname(__FILE__) . "/activecampaign-api-php/ActiveCampaign.class.php");
 
 function activecampaign_shortcodes($args) {
 	// check for Settings options saved first.

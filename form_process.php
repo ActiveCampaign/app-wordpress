@@ -9,7 +9,7 @@
 	$api_key = $settings["api_key"];
 	$sync = $_GET["sync"];
 
-	require_once "activecampaign-api-php/ActiveCampaign.class.php";
+	require_once(dirname(__FILE__) . "/activecampaign-api-php/ActiveCampaign.class.php");
 	$ac = new ActiveCampaignWordPress($api_url, $api_key);
 
 	$form_process = $ac->api("form/process?sync={$sync}");
