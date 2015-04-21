@@ -1,6 +1,6 @@
 <?php
 
-class AC_Webhook extends ActiveCampaign {
+class AC_WebhookWordPress extends ActiveCampaignWordPress {
 
 	public $version;
 	public $url_base;

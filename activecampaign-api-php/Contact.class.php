@@ -1,6 +1,6 @@
 <?php
 
-class AC_Contact extends ActiveCampaign {
+class AC_ContactWordPress extends ActiveCampaignWordPress {
 
 	public $version;
 	public $url_base;

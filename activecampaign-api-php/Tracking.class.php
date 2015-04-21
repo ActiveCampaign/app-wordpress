@@ -1,6 +1,6 @@
 <?php
 
-class AC_Tracking extends ActiveCampaign {
+class AC_TrackingWordPress extends ActiveCampaignWordPress {
 
 	public $version;
 	public $url_base;

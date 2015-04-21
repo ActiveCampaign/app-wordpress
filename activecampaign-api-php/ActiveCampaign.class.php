@@ -6,7 +6,7 @@ if ( !defined("ACTIVECAMPAIGN_URL") || (!defined("ACTIVECAMPAIGN_API_KEY") && !d
 
 require_once("Connector.class.php");
 
-class ActiveCampaign extends AC_Connector {
+class ActiveCampaignWordPress extends AC_ConnectorWordPress {
 
 	public $url_base;
 	public $url;
@@ -80,11 +80,11 @@ class ActiveCampaign extends AC_Connector {
 		}
 
 		$class = ucwords($component); // IE: "contact" becomes "Contact"
-		$class = "AC_" . $class;
+		$class = "AC_" . $class . "WordPress";
 		// IE: new Contact();
 
 		$add_tracking = false;
-		if ($class == "AC_Tracking") $add_tracking = true;
+		if ($class == "AC_TrackingWordPress") $add_tracking = true;
 
 		$class = new $class($this->version, $this->url_base, $this->url, $this->api_key);
 		// IE: $contact->view()
