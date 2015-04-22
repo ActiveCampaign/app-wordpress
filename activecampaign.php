@@ -500,7 +500,12 @@ function activecampaign_form_html($ac, $instance) {
 						// replace the API URL with the account URL (IE: https://account.api-us1.com is changed to http://account.activehosted.com).
 						// (the form has to submit to the account URL.)
 						if (!$instance["action"]) {
-							$html = preg_replace("/action=['\"][^'\"]+['\"]/", "action='//" . $instance["account"] . "/proc.php'", $html);
+							$protocol = "";
+							$domain = $instance["account"];
+							if (strpos($domain, "activehosted.com") === false) { 
+								$protocol = "http:";
+							}
+							$html = preg_replace("/action=['\"][^'\"]+['\"]/", "action='" . $protocol . "//" . $domain . "/proc.php'", $html);
 						}
 					}
 					// replace the Submit button to be an actual submit type.
