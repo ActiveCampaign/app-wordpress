@@ -43,8 +43,6 @@ function activecampaign_shortcodes($args) {
 					return $settings["form_html"][$form_id];
 				}
 			}
-			// return the first form in the array.
-			return current($settings["form_html"]);
 		}
 	}
 	else {
