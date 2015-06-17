@@ -1,6 +1,9 @@
 <?php
 
 	// only Ajax requests come through here
+	if (!session_id() || session_id() == '') {
+		session_start();
+	}
 
 	require_once("../../../wp-load.php");
 	$settings = get_option("settings_activecampaign");
