@@ -1,7 +1,7 @@
 <?php
 
 	// only Ajax requests come through here
-	if (!session_id() || session_id() == '') {
+	if (!session_id()) {
 		session_start();
 	}
 
