@@ -118,6 +118,10 @@ Please make sure that your login information is correct, and that you have at le
 = 5.91 =
 * Updates to avoid conflicts with other plugins using the ActiveCampaign PHP API wrapper.
 
+= 5.92 =
+* Support for captcha validation when using the 'Submit form without refreshing page' (Ajax) option.
+* Added success or error CSS classes to the Ajax response div.
+
 == Upgrade Notice ==
 
 = 1.1 =
