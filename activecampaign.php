@@ -434,8 +434,9 @@ function activecampaign_getforms($ac, $instance) {
   if ((int)$forms->success) {
     $items = array();
     $forms = get_object_vars($forms);
+    $blacklist = array("result_code", "result_message", "result_output", "http_code", "success");
     foreach ($forms as $key => $value) {
-      if (is_int($key)) {
+      if (!in_array($key, $blacklist)) {
         $items[] = get_object_vars($value);
       }
     }
