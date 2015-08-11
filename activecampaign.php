@@ -435,7 +435,7 @@ function activecampaign_getforms($ac, $instance) {
     $items = array();
     $forms = get_object_vars($forms);
     foreach ($forms as $key => $value) {
-      if (is_int($key)) {
+      if (is_numeric($key)) {
         $items[] = get_object_vars($value);
       }
     }
