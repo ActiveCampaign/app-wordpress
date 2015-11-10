@@ -190,7 +190,7 @@ function activecampaign_plugin_options() {
 
 					?>
 
-					<p><?php echo __("Get your API credentials from the Settings > API section:", "menu-activecampaign"); ?></p>
+					<p><?php echo __("Get your API credentials from the Settings > Developer section:", "menu-activecampaign"); ?></p>
 		
 					<p><img src="<?php echo plugins_url("activecampaign-subscription-forms"); ?>/settings1.jpg" /></p>
 
