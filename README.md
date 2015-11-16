@@ -135,6 +135,10 @@ Please make sure that your login information is correct, and that you have at le
 * Support for captcha validation when using the 'Submit form without refreshing page' (Ajax) option.
 * Added success or error CSS classes to the Ajax response div.
 
+### 5.93
+
+* Fix for issue with captcha verification when using the Ajax ("Submit form without refreshing page") form submission option.
+
 ## Upgrade Notice
 
 ### 1.1
