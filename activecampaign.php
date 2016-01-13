@@ -274,9 +274,11 @@ function activecampaign_plugin_options() {
 								<br />
 								<br />
 							</div>
+							<?php if (isset($form["version"]) && $form["version"] == 2): ?>
 							<input type="checkbox" name="ajax[<?php echo $form["id"]; ?>]" id="activecampaign_form_ajax_<?php echo $form["id"]; ?>" value="1" <?php echo $settings_ajax_checked; ?> onchange="ajax_toggle(<?php echo $form["id"]; ?>, this.checked);" />
 							<label for="activecampaign_form_ajax_<?php echo $form["id"]; ?>" style="">Submit form without refreshing page</label>
 							<br />
+							<?php endif; ?>
 							<input type="checkbox" name="css[<?php echo $form["id"]; ?>]" id="activecampaign_form_css_<?php echo $form["id"]; ?>" value="1" <?php echo $settings_css_checked; ?> />
 							<label for="activecampaign_form_css_<?php echo $form["id"]; ?>" style="">Keep original form CSS</label>
 						</div>
@@ -398,7 +400,11 @@ function activecampaign_plugin_options() {
 
 				foreach ($instance["form_html"] as $form_id => $form_html) {
 			
-					echo $form_html;
+					if (preg_match('/\/f\/embed\.php/', $form_html)) {
+						echo '<div class="_form_' . $form_id . '"></div>' . preg_replace('/embed\.php\?/', 'embed.php?static=1&', $form_html);
+					} else {
+						echo $form_html;
+					}
 					
 					?>
 					
@@ -461,6 +467,16 @@ function activecampaign_form_html($ac, $instance) {
 			// $instance["form_id"] is an array of form ID's (since we allow multiple now).
 
 			if (isset($instance["form_id"]) && in_array($form["id"], $instance["form_id"])) {
+
+				if (isset($form["version"]) && $form["version"] == 2) {
+					if ($form["layout"] !== 'inline-form') {
+						$instance["form_html"][$form["id"]] = '<script type="text/javascript" src="//' . $instance["account"] . '/f/embed.php?id=' . $form["id"] . (!$instance["css"][$form["id"]] ? "&nostyles=1" : "") . '"></script>';
+					} else {
+						$form_html = $ac->api("form/html?id=$form[id]" . (!$instance["css"][$form["id"]] ? "nostyles=1" : ""));
+						$instance["form_html"][$form["id"]] = $form_html;
+					}
+					continue;
+				}
 
 				$form_embed_params = array(
 					"id" => $form["id"],
