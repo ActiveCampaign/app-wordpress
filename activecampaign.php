@@ -28,6 +28,7 @@ Author URI: http://www.activecampaign.com
 ## version 5.91: Updates to avoid conflicts with other plugins using the ActiveCampaign PHP API wrapper.
 ## version 5.92: Support for captcha validation when using the 'Submit form without refreshing page' (Ajax) option. Also added success or error CSS classes to the Ajax response div.
 ## version 5.93: Fix for issue with captcha verification when using the Ajax ("Submit form without refreshing page") form submission option.
+## version 6.0: Added support for new form builder.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");

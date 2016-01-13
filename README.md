@@ -139,6 +139,10 @@ Please make sure that your login information is correct, and that you have at le
 
 * Fix for issue with captcha verification when using the Ajax ("Submit form without refreshing page") form submission option.
 
+### 6.0
+
+* Added support for new form builder.
+
 ## Upgrade Notice
 
 ### 1.1
@@ -184,3 +188,7 @@ Please make sure that your login information is correct, and that you have at le
 ### 5.9
 
 * Site tracking users: the current logged-in user will now be associated with each page visit.
+
+### 6.0
+
+* After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
