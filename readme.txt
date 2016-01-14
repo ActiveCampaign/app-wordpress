@@ -125,7 +125,7 @@ Please make sure that your login information is correct, and that you have at le
 = 5.93 =
 * Fix for issue with captcha verification when using the Ajax ("Submit form without refreshing page") form submission option.
 
-= 5.93 =
+= 6.0 =
 * Added support for new form builder.
 
 == Upgrade Notice ==
