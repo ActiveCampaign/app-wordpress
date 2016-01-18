@@ -85,7 +85,7 @@ function activecampaign_plugin_options() {
 			$ac = new ActiveCampaignWordPress($_POST["api_url"], $_POST["api_key"]);
 
 			if (!(int)$ac->credentials_test()) {
-				echo "<p style='color: red; font-weight: bold;'>" . __("Access denied: Invalid credentials (URL and/or API key).", "menu-activecampaign") . "</p>";
+				echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Access denied: Invalid credentials (URL and/or API key).", "menu-activecampaign") . "</p>";
 			}
 			else {
 
@@ -160,7 +160,7 @@ function activecampaign_plugin_options() {
 
 		<h2><?php echo __("ActiveCampaign Settings", "menu-activecampaign"); ?></h2>
 	
-		<p>
+		<p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'>
 			<?php
 
 				echo __("Configure your ActiveCampaign subscription form to be used as a shortcode anywhere on your site. Use <code>[activecampaign form=ID]</code> shortcode in posts, pages, or a sidebar after setting up everything below. Questions or problems? Contact help@activecampaign.com.", "menu-activecampaign");
@@ -168,7 +168,7 @@ function activecampaign_plugin_options() {
 			?>
 		</p>
 	
-		<form name="activecampaign_settings_form" method="post" action="">
+		<form name="activecampaign_settings_form" method="post" action="" style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'>
 
 			<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 30px;" />
 
@@ -192,7 +192,7 @@ function activecampaign_plugin_options() {
 
 					?>
 
-					<p><?php echo __("Get your API credentials from the Settings > Developer section:", "menu-activecampaign"); ?></p>
+					<p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'><?php echo __("Get your API credentials from the Settings > Developer section:", "menu-activecampaign"); ?></p>
 		
 					<p><img src="<?php echo plugins_url("activecampaign-subscription-forms"); ?>/settings1.jpg" /></p>
 
@@ -220,7 +220,7 @@ function activecampaign_plugin_options() {
 					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 30px;" />
 
 					<h3><?php echo __("Subscription Forms", "menu-activecampaign"); ?></h3>
-					<p><i><?php echo __("Choose subscription forms to cache locally. To add new forms go to your <a href=\"http://" . $instance["account"] . "/admin/main.php?action=form\" target=\"_blank\">ActiveCampaign > Integration section</a>.", "menu-activecampaign"); ?></i></p>
+					<p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'><i><?php echo __("Choose subscription forms to cache locally. To add new forms go to your <a href=\"http://" . $instance["account"] . "/admin/main.php?action=form\" target=\"_blank\" style='color: #23538C !important;'>ActiveCampaign > Integration section</a>.", "menu-activecampaign"); ?></i></p>
 
 					<?php
 
@@ -293,11 +293,11 @@ function activecampaign_plugin_options() {
 					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin: 30px 0 20px 0;" />
 
 					<h3><?php echo __("Site Tracking", "menu-activecampaign"); ?></h3>
-					<p><i><?php echo __("Site tracking lets you record visitor history on your site to use for targeted segmenting. Learn more on the <a href=\"http://" . $instance["account"] . "/track/\" target=\"_blank\">ActiveCampaign > Integration section</a>.", "menu-activecampaign"); ?></i></p>
+					<p><i><?php echo __("Site tracking lets you record visitor history on your site to use for targeted segmenting. Learn more on the <a href=\"http://" . $instance["account"] . "/track/\" target=\"_blank\" style='color: #23538C !important;'>ActiveCampaign > Integration section</a>.", "menu-activecampaign"); ?></i></p>
 
 					<input type="checkbox" name="site_tracking" id="activecampaign_site_tracking" value="1" <?php echo $settings_st_checked; ?> onchange="site_tracking_toggle(this.checked);" />
 					<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
-					(<a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">?</a>)
+					(<a href="http://www.activecampaign.com/help/site-event-tracking/" style='color: #23538C !important;' target="_blank">?</a>)
 
 					<script type='text/javascript'>
 
@@ -585,7 +585,7 @@ function activecampaign_form_html($ac, $instance) {
   }
   else {
 		// no forms created in the AC account yet.
-		echo "<p style='color: red;'>" . __("Make sure you have at least one form created in ActiveCampaign.") . "</p>";
+		echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #776e30; font-family:arial; background: #fff3a5; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Make sure you have at least one form created in ActiveCampaign.") . "</p>";
   }
 
   return $instance;
@@ -665,13 +665,14 @@ function activecampaign_get_forms_callback() {
 // version 3.9 has this.
 function activecampaign_get_forms_html_callback() {
 	$forms = activecampaign_get_forms_ajax();
-	echo "<div style='font-family: Arial, Helvetica, sans-serif; font-size: 13px;'>";
-	echo "<p>" . __("Choose an integration form below to embed into your post or page body. Add or edit forms in ActiveCampaign and then refresh the forms on the <a href='" . get_site_url() . "/wp-admin/options-general.php?page=activecampaign' target='_blank'>Settings page</a>.") . "</p>";
+	echo "<div style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'>";
+	echo "<p>" . __("Choose an integration form below to embed into your post or page body. Add or edit forms in ActiveCampaign and then refresh the forms on the <a href='" . get_site_url() . "/wp-admin/options-general.php?page=activecampaign' target='_blank' style='color: #23538C !important;'>Settings page</a>.") . "</p>";
 	if ($forms) {
 		echo "<ul style='list-style-type: none; padding: 0; margin: 0 0 0 5px;'>";
 	}
 	foreach ($forms as $formid => $formname) {
-		echo "<li style='margin-bottom: 8px;'><a href='#' onclick='parent.activecampaign_editor_form_embed(" . $formid . "); return false;'>" . $formname . "</a></li>";
+		echo "<li style='margin-bottom: 10px;'><a href='#' onclick='parent.activecampaign_editor_form_embed(" . $formid . "); return false;' style='text-transform: capitalize; margin: 0; padding: 12px 24px; font-size: 13px; text-align: center; text-decoration: none !important; border-radius: 4px !important; display: inline-block; color: #5d5d5d !important; background: #fff !important; border: 1px solid #c0c0c0 !important; cursor: pointer !important; zoom: 1; -webkit-appearance: none; line-height: 1.42857143; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; font-weight: 600;'
+>" . $formname . "</a></li>";
 	}
 	if ($forms) {
 		echo "</ul>";
