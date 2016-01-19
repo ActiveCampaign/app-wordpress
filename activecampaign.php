@@ -665,17 +665,17 @@ function activecampaign_get_forms_callback() {
 // version 3.9 has this.
 function activecampaign_get_forms_html_callback() {
 	$forms = activecampaign_get_forms_ajax();
-	echo "<div style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'>";
+	echo "<div style='padding: 20px;font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'>";
 	echo "<p>" . __("Choose an integration form below to embed into your post or page body. Add or edit forms in ActiveCampaign and then refresh the forms on the <a href='" . get_site_url() . "/wp-admin/options-general.php?page=activecampaign' target='_blank' style='color: #23538C !important;'>Settings page</a>.") . "</p>";
 	if ($forms) {
-		echo "<ul style='list-style-type: none; padding: 0; margin: 0 0 0 5px;'>";
+		echo "<div style='padding: 0; margin: 0 -3px'>";
 	}
 	foreach ($forms as $formid => $formname) {
-		echo "<li style='margin-bottom: 10px;'><a href='#' onclick='parent.activecampaign_editor_form_embed(" . $formid . "); return false;' style='text-transform: capitalize; margin: 0; padding: 12px 24px; font-size: 13px; text-align: center; text-decoration: none !important; border-radius: 4px !important; display: inline-block; color: #5d5d5d !important; background: #fff !important; border: 1px solid #c0c0c0 !important; cursor: pointer !important; zoom: 1; -webkit-appearance: none; line-height: 1.42857143; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; font-weight: 600;'
->" . $formname . "</a></li>";
+		echo "<a href='#' onclick='parent.activecampaign_editor_form_embed(" . $formid . "); return false;' style='display: inline-block; text-transform: capitalize; margin: 3px 3px 10px; padding: 12px 24px; font-size: 13px; text-align: center; text-decoration: none !important; border-radius: 4px !important; color: #5d5d5d !important; background: #fff !important; border: 1px solid #c0c0c0 !important; cursor: pointer !important; zoom: 1; -webkit-appearance: none; line-height: 1.42857143; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; font-weight: 600;'
+>" . $formname . "</a>";
 	}
 	if ($forms) {
-		echo "</ul>";
+		echo "</div>";
 	}
 	echo "</div>";
 	die();
