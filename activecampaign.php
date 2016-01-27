@@ -275,7 +275,7 @@ function activecampaign_plugin_options() {
 								<br />
 								<br />
 							</div>
-							<?php if (isset($form["version"]) && $form["version"] == 2): ?>
+							<?php if (!isset($form["version"]) || $form["version"] != 2): ?>
 							<input type="checkbox" name="ajax[<?php echo $form["id"]; ?>]" id="activecampaign_form_ajax_<?php echo $form["id"]; ?>" value="1" <?php echo $settings_ajax_checked; ?> onchange="ajax_toggle(<?php echo $form["id"]; ?>, this.checked);" />
 							<label for="activecampaign_form_ajax_<?php echo $form["id"]; ?>" style="">Submit form without refreshing page</label>
 							<br />
