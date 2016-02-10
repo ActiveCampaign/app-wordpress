@@ -470,7 +470,7 @@ function activecampaign_form_html($ac, $instance) {
 			if (isset($instance["form_id"]) && in_array($form["id"], $instance["form_id"])) {
 
 				if (isset($form["version"]) && $form["version"] == 2) {
-					$instance["form_html"][$form["id"]] = '<script type="text/javascript" src="//' . $instance["account"] . '/f/embed.php?id=' . $form["id"] . (!$instance["css"][$form["id"]] ? "&nostyles=1" : "") . '"></script>';
+					$instance["form_html"][$form["id"]] = ($form['layout'] == 'inline-form' ? '<div class="_form_' . $form["id"] . '"></div>' : '') . '<script type="text/javascript" src="//' . $instance["account"] . '/f/embed.php?id=' . $form["id"] . (!$instance["css"][$form["id"]] ? "&nostyles=1" : "") . '"></script>';
 					continue;
 				}
 
