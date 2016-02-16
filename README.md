@@ -56,6 +56,10 @@ Please make sure that your login information is correct, and that you have at le
 
 ## Changelog
 
+### 6.1
+
+* Fix for issue with new forms not displaying properly.
+
 ### 6.0
 
 * Added support for new form builder.
@@ -144,6 +148,10 @@ Please make sure that your login information is correct, and that you have at le
 * Initial release.
 
 ## Upgrade Notice
+
+### 6.1
+
+* After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
 
 ### 6.0
 
