@@ -665,7 +665,7 @@ function activecampaign_get_forms_callback() {
 // version 3.9 has this.
 function activecampaign_get_forms_html_callback() {
 	$forms = activecampaign_get_forms_ajax();
-	echo "<div style='padding: 0 15px;font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'>";
+	echo "<div style='padding: 0 10px;font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'>";
 	echo "<p>" . __("Choose an integration form below to embed into your post or page body. Add or edit forms in ActiveCampaign and then refresh the forms on the <a href='" . get_site_url() . "/wp-admin/options-general.php?page=activecampaign' target='_blank' style='color: #23538C !important;'>Settings page</a>.") . "</p>";
 	if ($forms) {
 		echo "<div style='padding: 0; margin: 0 -3px'>";
