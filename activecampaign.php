@@ -98,6 +98,8 @@ function activecampaign_plugin_options() {
 				$account = $ac->api("account/view");
 				$domain = (isset($account->cname) && $account->cname) ? $account->cname : $account->account;
 				$instance["account"] = $domain;
+				// The ActiveCampaign hosted domain (something.activehosted.com).
+				$instance["account_hosted"] = $account->account;
 
 				$user_me = $ac->api("user/me");
 				// the tracking ID from the Integrations page.
@@ -471,7 +473,9 @@ function activecampaign_form_html($ac, $instance) {
 			if (isset($instance["form_id"]) && in_array($form["id"], $instance["form_id"])) {
 
 				if (isset($form["version"]) && $form["version"] == 2) {
-					$instance["form_html"][$form["id"]] = ($form['layout'] == 'inline-form' ? '<div class="_form_' . $form["id"] . '"></div>' : '') . '<script type="text/javascript" src="//' . $instance["account"] . '/f/embed.php?id=' . $form["id"] . (!$instance["css"][$form["id"]] ? "&nostyles=1" : "") . '"></script>';
+					// Always use the activehosted.com domain because we can't be sure their CNAME supports SSL.
+					$embed_domain = $instance["account_hosted"];
+					$instance["form_html"][$form["id"]] = ($form['layout'] == 'inline-form' ? '<div class="_form_' . $form["id"] . '"></div>' : '') . '<script type="text/javascript" src="//' . $embed_domain . '/f/embed.php?id=' . $form["id"] . (!$instance["css"][$form["id"]] ? "&nostyles=1" : "") . '"></script>';
 					continue;
 				}
 
