@@ -98,8 +98,6 @@ function activecampaign_plugin_options() {
 				$account = $ac->api("account/view");
 				$domain = (isset($account->cname) && $account->cname) ? $account->cname : $account->account;
 				$instance["account"] = $domain;
-				// The ActiveCampaign hosted domain (something.activehosted.com).
-				$instance["account_hosted"] = $account->account;
 
 				$user_me = $ac->api("user/me");
 				// the tracking ID from the Integrations page.
@@ -466,6 +464,12 @@ function activecampaign_getforms($ac, $instance) {
 function activecampaign_form_html($ac, $instance) {
 
 	if ($instance["forms"]) {
+		$domain = $instance["account"];
+		$protocol = "";
+		if (strpos($domain, "activehosted.com") === false) {
+			// CNAME in use, so we can't assume SSL.
+			$protocol = "http:";
+		}
 		foreach ($instance["forms"] as $form) {
 
 			// $instance["form_id"] is an array of form ID's (since we allow multiple now).
@@ -473,8 +477,7 @@ function activecampaign_form_html($ac, $instance) {
 			if (isset($instance["form_id"]) && in_array($form["id"], $instance["form_id"])) {
 
 				if (isset($form["version"]) && $form["version"] == 2) {
-					// Always use the activehosted.com domain because we can't be sure their CNAME supports SSL.
-					$instance["form_html"][$form["id"]] = ($form['layout'] == 'inline-form' ? '<div class="_form_' . $form["id"] . '"></div>' : '') . '<script type="text/javascript" src="//' . $instance["account_hosted"] . '/f/embed.php?id=' . $form["id"] . (!$instance["css"][$form["id"]] ? "&nostyles=1" : "") . '"></script>';
+					$instance["form_html"][$form["id"]] = ($form['layout'] == 'inline-form' ? '<div class="_form_' . $form["id"] . '"></div>' : '') . '<script type="text/javascript" src="' . $protocol . '//' . $instance["account"] . '/f/embed.php?id=' . $form["id"] . (!$instance["css"][$form["id"]] ? "&nostyles=1" : "") . '"></script>';
 					continue;
 				}
 
@@ -516,11 +519,6 @@ function activecampaign_form_html($ac, $instance) {
 						// replace the API URL with the account URL (IE: https://account.api-us1.com is changed to http://account.activehosted.com).
 						// (the form has to submit to the account URL.)
 						if (!$instance["action"]) {
-							$protocol = "";
-							$domain = $instance["account"];
-							if (strpos($domain, "activehosted.com") === false) { 
-								$protocol = "http:";
-							}
 							$html = preg_replace("/action=['\"][^'\"]+['\"]/", "action='" . $protocol . "//" . $domain . "/proc.php'", $html);
 						}
 					}
