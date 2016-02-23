@@ -464,6 +464,12 @@ function activecampaign_getforms($ac, $instance) {
 function activecampaign_form_html($ac, $instance) {
 
 	if ($instance["forms"]) {
+		$domain = $instance["account"];
+		$protocol = "https:";
+		if (strpos($domain, "activehosted.com") === false && strpos($domain, "12all.com") === false) {
+			// CNAME in use, so we can't assume SSL.
+			$protocol = "http:";
+		}
 		foreach ($instance["forms"] as $form) {
 
 			// $instance["form_id"] is an array of form ID's (since we allow multiple now).
@@ -471,7 +477,7 @@ function activecampaign_form_html($ac, $instance) {
 			if (isset($instance["form_id"]) && in_array($form["id"], $instance["form_id"])) {
 
 				if (isset($form["version"]) && $form["version"] == 2) {
-					$instance["form_html"][$form["id"]] = ($form['layout'] == 'inline-form' ? '<div class="_form_' . $form["id"] . '"></div>' : '') . '<script type="text/javascript" src="//' . $instance["account"] . '/f/embed.php?id=' . $form["id"] . (!$instance["css"][$form["id"]] ? "&nostyles=1" : "") . '"></script>';
+					$instance["form_html"][$form["id"]] = ($form['layout'] == 'inline-form' ? '<div class="_form_' . $form["id"] . '"></div>' : '') . '<script type="text/javascript" src="' . $protocol . '//' . $instance["account"] . '/f/embed.php?id=' . $form["id"] . (!$instance["css"][$form["id"]] ? "&nostyles=1" : "") . '"></script>';
 					continue;
 				}
 
@@ -513,11 +519,6 @@ function activecampaign_form_html($ac, $instance) {
 						// replace the API URL with the account URL (IE: https://account.api-us1.com is changed to http://account.activehosted.com).
 						// (the form has to submit to the account URL.)
 						if (!$instance["action"]) {
-							$protocol = "";
-							$domain = $instance["account"];
-							if (strpos($domain, "activehosted.com") === false) { 
-								$protocol = "http:";
-							}
 							$html = preg_replace("/action=['\"][^'\"]+['\"]/", "action='" . $protocol . "//" . $domain . "/proc.php'", $html);
 						}
 					}
