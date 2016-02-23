@@ -465,8 +465,8 @@ function activecampaign_form_html($ac, $instance) {
 
 	if ($instance["forms"]) {
 		$domain = $instance["account"];
-		$protocol = "";
-		if (strpos($domain, "activehosted.com") === false) {
+		$protocol = "https:";
+		if (strpos($domain, "activehosted.com") === false && strpos($domain, "12all.com") === false) {
 			// CNAME in use, so we can't assume SSL.
 			$protocol = "http:";
 		}
