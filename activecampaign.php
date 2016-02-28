@@ -616,6 +616,17 @@ function activecampaign_editor_buttons() {
 
 function activecampaign_add_buttons($plugin_array) {
 	$plugin_array["activecampaign_editor_buttons"] = plugins_url("editor_buttons.js", __FILE__);
+	//we need to load the JS for this button as well
+	//and we should load it on any page that has the button loaded, since some plugins allow editing pages from anywhere
+	wp_enqueue_script("editor_pages", plugins_url("editor_pages.js", __FILE__), array(), false, true);
+
+	// any data we need to access in JavaScript.
+	$data = array(
+		"site_url" => __(site_url()),
+		"wp_version" => $GLOBALS["wp_version"],
+	);
+	wp_localize_script("editor_pages", "php_data", $data);
+
 	return $plugin_array;
 }
 
@@ -636,7 +647,6 @@ add_action("wp_ajax_activecampaign_get_forms", "activecampaign_get_forms_callbac
 add_action("wp_ajax_activecampaign_get_forms_html", "activecampaign_get_forms_html_callback");
 add_action("admin_enqueue_scripts", "activecampaign_custom_wp_admin_style");
 add_action("wp_enqueue_scripts", "activecampaign_frontend_scripts");
-add_action("admin_enqueue_scripts", "activecampaign_backend_scripts");
 
 // get the raw forms data (array) for use in multiple spots.
 function activecampaign_get_forms_ajax() {
@@ -708,19 +718,6 @@ function activecampaign_frontend_scripts() {
 		"user_email" => $user_email,
 	);
 	wp_localize_script("site_tracking", "php_data", $data);
-}
-
-function activecampaign_backend_scripts() {
-	if (in_array($GLOBALS["pagenow"], array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
-		// this loads the JavaScript file on pages where we use it (any post page that uses the Editor).
-		wp_enqueue_script("editor_pages", plugins_url("editor_pages.js", __FILE__), array(), false, true);
-		// any data we need to access in JavaScript.
-		$data = array(
-			"site_url" => __(site_url()),
-			"wp_version" => $GLOBALS["wp_version"],
-		);
-		wp_localize_script("editor_pages", "php_data", $data);
-	}	
 }
 
 ?>
