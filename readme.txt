@@ -61,6 +61,9 @@ Please make sure that your login information is correct, and that you have at le
 
 == Changelog ==
 
+= 6.2 =
+* Fix for compatibility issue with Live Composer plugin.
+
 = 6.1 =
 * Fix for issue with new forms not displaying properly.
 
