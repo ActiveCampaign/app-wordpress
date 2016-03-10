@@ -97,7 +97,11 @@ function activecampaign_plugin_options() {
 
 				// get account details.
 				$account = $ac->api("account/view");
-				$domain = (isset($account->cname) && $account->cname) ? $account->cname : $account->account;
+				$domain = $account->account;
+				if (!(int)$account->branding && isset($account->cname) && $account->cname) {
+					// If branding is OFF, and they have a CNAME, let's use that.
+					$domain = $account->cname;
+				}
 				$instance["account"] = $domain;
 
 				$user_me = $ac->api("user/me");
@@ -468,7 +472,7 @@ function activecampaign_form_html($ac, $instance) {
 		$domain = $instance["account"];
 		$protocol = "https:";
 		if (strpos($domain, "activehosted.com") === false && strpos($domain, "12all.com") === false) {
-			// CNAME in use, so we can't assume SSL.
+			// CNAME in use, so we can't use SSL.
 			$protocol = "http:";
 		}
 		foreach ($instance["forms"] as $form) {
