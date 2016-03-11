@@ -50,11 +50,12 @@ function activecampaign_get_protocol() {
  * Get the source code for the form itself.
  * In the past we just returned the form HTML code (CSS + HTML), but the new version of forms just uses the JavaScript stuff (HTML JavaScript include).
  *
- * @param  array  settings  The saved ActiveCampaign settings (from the WordPress admin section).
- * @param  array  form      The individual form metadata (that we obtained from the forms/getforms API call).
- * @return string           The raw source code that will render the form in the browser.
+ * @param  array   settings  The saved ActiveCampaign settings (from the WordPress admin section).
+ * @param  array   form      The individual form metadata (that we obtained from the forms/getforms API call).
+ * @param  boolean static    Set to true so the "floating" forms don't float. Typically this is done for the admin section only.
+ * @return string            The raw source code that will render the form in the browser.
  */
-function activecampaign_form_source($settings, $form) {
+function activecampaign_form_source($settings, $form, $static = false) {
 	$source = "";
 	if (isset($form["version"]) && $form["version"] == 2) {
 		if ($form["layout"] == "inline-form") {
@@ -71,7 +72,11 @@ function activecampaign_form_source($settings, $form) {
 		}
 		$protocol = "//";
 		$source .= "<script type='text/javascript' src='";
-		$source .= sprintf("%s%s/f/embed.php?id=%d", $protocol, $domain, $form["id"]);
+		$source .= sprintf("%s%s/f/embed.php?", $protocol, $domain);
+		if ($static) {
+			$source .= "static=1&";
+		}
+		$source .= sprintf("id=%d", $form["id"]);
 		if (!$settings["css"][$form["id"]]) {
 			$source .= "&nostyles=1";
 		}
@@ -86,7 +91,7 @@ function activecampaign_shortcodes($args) {
 	// check for Settings options saved first.
 	$settings = get_option("settings_activecampaign");
 	if ($settings) {
-		if (isset($settings["form_html"]) && $settings["form_html"]) {
+		if (isset($settings["forms"]) && $settings["forms"]) {
 			if (isset($args) && isset($args["form"])) {
 				$form_id = $args["form"];
 				$form = $settings["forms"][$form_id];
@@ -444,7 +449,7 @@ function activecampaign_plugin_options() {
 
 		<?php
 
-			if (isset($instance["form_html"])) {
+			if (isset($instance["forms"])) {
 
 				?>
 
@@ -455,10 +460,7 @@ function activecampaign_plugin_options() {
 
 				foreach ($instance["forms"] as $form_id => $form_metadata) {
 
-					$form_source = activecampaign_form_source($instance, $form_metadata);
-					if (preg_match('/\/f\/embed\.php/', $form_source)) {
-						$form_source = '<div class="_form_' . $form_id . '"></div>' . preg_replace('/embed\.php\?/', 'embed.php?static=1&', $form_source);
-					}
+					$form_source = activecampaign_form_source($instance, $form_metadata, true);
 					echo $form_source;
 					
 					?>
