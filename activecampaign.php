@@ -38,15 +38,6 @@ define("ACTIVECAMPAIGN_API_KEY", "");
 require_once(dirname(__FILE__) . "/activecampaign-api-php/ActiveCampaign.class.php");
 
 /**
- * Get the protocol being used for the current page load.
- * This helps us determine what protocol and domain to use for the form script.
- * @return  string  The protocol in use.
- */
-function activecampaign_get_protocol() {
-	return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-}
-
-/**
  * Get the source code for the form itself.
  * In the past we just returned the form HTML code (CSS + HTML), but the new version of forms just uses the JavaScript stuff (HTML JavaScript include).
  *
@@ -61,18 +52,10 @@ function activecampaign_form_source($settings, $form, $static = false) {
 		if ($form["layout"] == "inline-form") {
 			$source .= "<div class='_form_" . $form["id"] . "'></div>";
 		}
-		$protocol = activecampaign_get_protocol();
 		// Set to activehosted.com domain by default.
 		$domain = $settings["account_view"]["account"];
-		if ($protocol == "http://") {
-			if (isset($settings["account_view"]["cname"]) && $settings["account_view"]["cname"]) {
-				// CNAME is in use and the page is being accessed via HTTP, so it's safe to use the CNAME for the form script.
-				$domain = $settings["account_view"]["cname"];
-			}
-		}
-		$protocol = "//";
 		$source .= "<script type='text/javascript' src='";
-		$source .= sprintf("%s%s/f/embed.php?", $protocol, $domain);
+		$source .= sprintf("https://%s/f/embed.php?", $domain);
 		if ($static) {
 			$source .= "static=1&";
 		}
