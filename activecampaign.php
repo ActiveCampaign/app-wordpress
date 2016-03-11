@@ -131,8 +131,7 @@ function activecampaign_plugin_options() {
 				// get account details.
 				$account = $ac->api("account/view");
 				$instance["account_view"] = get_object_vars($account);
-				$domain = (isset($account->cname) && $account->cname) ? $account->cname : $account->account;
-				$instance["account"] = $domain;
+				$instance["account"] = $account->account;
 
 				$user_me = $ac->api("user/me");
 				// the tracking ID from the Integrations page.
@@ -517,10 +516,6 @@ function activecampaign_form_html($ac, $instance) {
 
 				$domain = $instance["account"];
 				$protocol = "https:";
-				if (strpos($domain, "activehosted.com") === false && strpos($domain, "12all.com") === false) {
-					// CNAME in use, so we can't assume SSL.
-					$protocol = "http:";
-				}
 
 				$form_embed_params = array(
 					"id" => $form["id"],
