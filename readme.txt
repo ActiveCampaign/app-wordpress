@@ -2,7 +2,7 @@
 Contributors: activecampaign
 Tags: activecampaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation
 Requires at least: 2
-Tested up to: 4.4
+Tested up to: 4.5
 Stable tag: trunk
 
 Add ActiveCampaign contact forms to any post, page, or sidebar. Also enable ActiveCampaign site tracking for your WordPress blog.
@@ -60,6 +60,9 @@ Please make sure that your login information is correct, and that you have at le
 5. Adding a form to the sidebar
 
 == Changelog ==
+
+= 6.25 =
+* Fix for SSL issue (when the page is loaded via HTTPS and the AC account uses a CNAME, forms would not show up).
 
 = 6.2 =
 * Fix for compatibility issue with Live Composer plugin.
@@ -135,6 +138,9 @@ Please make sure that your login information is correct, and that you have at le
 * Initial release.
 
 == Upgrade Notice ==
+
+= 6.25 =
+* After upgrading go to ActiveCampaign settings and click "Update Settings" so it reloads the form code.
 
 = 6.1 =
 * After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.

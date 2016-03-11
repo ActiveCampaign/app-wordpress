@@ -56,6 +56,10 @@ Please make sure that your login information is correct, and that you have at le
 
 ## Changelog
 
+### 6.25
+
+* Fix for SSL issue (when the page is loaded via HTTPS and the AC account uses a CNAME, forms would not show up).
+
 ### 6.2
 
 * Fix for issue with new forms not displaying properly.
@@ -152,6 +156,10 @@ Please make sure that your login information is correct, and that you have at le
 * Initial release.
 
 ## Upgrade Notice
+
+### 6.25
+
+* After upgrading go to ActiveCampaign settings and click "Update Settings" so it reloads the form code.
 
 ### 6.1
 
