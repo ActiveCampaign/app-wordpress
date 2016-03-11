@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 6.2
+Version: 6.25
 Author URI: http://www.activecampaign.com
 */
 
@@ -31,22 +31,55 @@ Author URI: http://www.activecampaign.com
 ## version 6.0: Added support for new form builder.
 ## version 6.1: Fix for issue with new forms not displaying properly.
 ## version 6.2: Fix for compatability issue with live composer plugin.
+## version 6.25: Fix for SSL issue (when the page is loaded via HTTPS and the AC account uses a CNAME, forms would not show up).
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
 require_once(dirname(__FILE__) . "/activecampaign-api-php/ActiveCampaign.class.php");
 
+/**
+ * Get the source code for the form itself.
+ * In the past we just returned the form HTML code (CSS + HTML), but the new version of forms just uses the JavaScript stuff (HTML JavaScript include).
+ *
+ * @param  array   settings  The saved ActiveCampaign settings (from the WordPress admin section).
+ * @param  array   form      The individual form metadata (that we obtained from the forms/getforms API call).
+ * @param  boolean static    Set to true so the "floating" forms don't float. Typically this is done for the admin section only.
+ * @return string            The raw source code that will render the form in the browser.
+ */
+function activecampaign_form_source($settings, $form, $static = false) {
+	$source = "";
+	if (isset($form["version"]) && $form["version"] == 2) {
+		if ($form["layout"] == "inline-form") {
+			$source .= "<div class='_form_" . $form["id"] . "'></div>";
+		}
+		// Set to activehosted.com domain by default.
+		$domain = $settings["account_view"]["account"];
+		$source .= "<script type='text/javascript' src='";
+		$source .= sprintf("https://%s/f/embed.php?", $domain);
+		if ($static) {
+			$source .= "static=1&";
+		}
+		$source .= sprintf("id=%d", $form["id"]);
+		if (!$settings["css"][$form["id"]]) {
+			$source .= "&nostyles=1";
+		}
+		$source .= "'></script>";
+	} else {
+		// Version 1 forms.
+	}
+	return $source;
+}
+
 function activecampaign_shortcodes($args) {
 	// check for Settings options saved first.
 	$settings = get_option("settings_activecampaign");
 	if ($settings) {
-		if (isset($settings["form_html"]) && $settings["form_html"]) {
+		if (isset($settings["forms"]) && $settings["forms"]) {
 			if (isset($args) && isset($args["form"])) {
 				$form_id = $args["form"];
-				if (isset($settings["form_html"][$form_id])) {
-					// return the specified form (as long as it's ID exists in the array).
-					return $settings["form_html"][$form_id];
-				}
+				$form = $settings["forms"][$form_id];
+				$form_source = activecampaign_form_source($settings, $form);
+				return $form_source;
 			}
 		}
 	}
@@ -97,8 +130,8 @@ function activecampaign_plugin_options() {
 
 				// get account details.
 				$account = $ac->api("account/view");
-				$domain = (isset($account->cname) && $account->cname) ? $account->cname : $account->account;
-				$instance["account"] = $domain;
+				$instance["account_view"] = get_object_vars($account);
+				$instance["account"] = $account->account;
 
 				$user_me = $ac->api("user/me");
 				// the tracking ID from the Integrations page.
@@ -189,6 +222,14 @@ function activecampaign_plugin_options() {
 			</p>
 
 			<?php
+				$button_value = ($connected) ? "Update Settings" : "Connect";
+
+				if ($button_value == "Update Settings") {
+					// Only show this additional form submit button if they are already connected.
+					?>
+					<p><button type="submit" style="font-size: 16px; margin-top: 25px; padding: 10px;"><?php echo __($button_value, "menu-activecampaign"); ?></button></p>
+					<?php
+				}
 
 				if (!$connected) {
 
@@ -196,7 +237,7 @@ function activecampaign_plugin_options() {
 
 					<p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'><?php echo __("Get your API credentials from the Settings > Developer section:", "menu-activecampaign"); ?></p>
 		
-					<p><img src="<?php echo plugins_url("activecampaign-subscription-forms"); ?>/settings1.jpg" /></p>
+					<p><img src="<?php echo plugins_url("activecampaign-subscription-forms"); ?>/settings1.png" /></p>
 
 					<?php
 
@@ -382,8 +423,6 @@ function activecampaign_plugin_options() {
 
 				}
 
-				$button_value = ($connected) ? "Update" : "Connect";
-
 			?>
 
 			<p><button type="submit" style="font-size: 16px; margin-top: 25px; padding: 10px;"><?php echo __($button_value, "menu-activecampaign"); ?></button></p>
@@ -392,7 +431,7 @@ function activecampaign_plugin_options() {
 
 		<?php
 
-			if (isset($instance["form_html"])) {
+			if (isset($instance["forms"])) {
 
 				?>
 
@@ -401,13 +440,10 @@ function activecampaign_plugin_options() {
 
 				<?php
 
-				foreach ($instance["form_html"] as $form_id => $form_html) {
-			
-					if (preg_match('/\/f\/embed\.php/', $form_html)) {
-						echo '<div class="_form_' . $form_id . '"></div>' . preg_replace('/embed\.php\?/', 'embed.php?static=1&', $form_html);
-					} else {
-						echo $form_html;
-					}
+				foreach ($instance["forms"] as $form_id => $form_metadata) {
+
+					$form_source = activecampaign_form_source($instance, $form_metadata, true);
+					echo $form_source;
 					
 					?>
 					
@@ -446,7 +482,7 @@ function activecampaign_getforms($ac, $instance) {
     $forms = get_object_vars($forms);
     foreach ($forms as $key => $value) {
       if (is_numeric($key)) {
-        $items[] = get_object_vars($value);
+        $items[$value->id] = get_object_vars($value);
       }
     }
     $instance["forms"] = $items;
@@ -465,12 +501,6 @@ function activecampaign_getforms($ac, $instance) {
 function activecampaign_form_html($ac, $instance) {
 
 	if ($instance["forms"]) {
-		$domain = $instance["account"];
-		$protocol = "https:";
-		if (strpos($domain, "activehosted.com") === false && strpos($domain, "12all.com") === false) {
-			// CNAME in use, so we can't assume SSL.
-			$protocol = "http:";
-		}
 		foreach ($instance["forms"] as $form) {
 
 			// $instance["form_id"] is an array of form ID's (since we allow multiple now).
@@ -478,9 +508,14 @@ function activecampaign_form_html($ac, $instance) {
 			if (isset($instance["form_id"]) && in_array($form["id"], $instance["form_id"])) {
 
 				if (isset($form["version"]) && $form["version"] == 2) {
-					$instance["form_html"][$form["id"]] = ($form['layout'] == 'inline-form' ? '<div class="_form_' . $form["id"] . '"></div>' : '') . '<script type="text/javascript" src="' . $protocol . '//' . $instance["account"] . '/f/embed.php?id=' . $form["id"] . (!$instance["css"][$form["id"]] ? "&nostyles=1" : "") . '"></script>';
+					// Nothing to do here - we'll generate the form source code on page load.
 					continue;
 				}
+
+				// Version 1 forms only should proceed here!!
+
+				$domain = $instance["account"];
+				$protocol = "https:";
 
 				$form_embed_params = array(
 					"id" => $form["id"],
