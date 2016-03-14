@@ -63,6 +63,7 @@ Please make sure that your login information is correct, and that you have at le
 
 = 6.25 =
 * Fix for SSL issue (when the page is loaded via HTTPS and the AC account uses a CNAME, forms would not show up).
+* **After upgrading go to WordPress ActiveCampaign settings and click "Update Settings" so it reloads the form code!**
 
 = 6.2 =
 * Fix for compatibility issue with Live Composer plugin.
