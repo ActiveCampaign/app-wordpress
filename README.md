@@ -160,6 +160,7 @@ Please make sure that your login information is correct, and that you have at le
 ### 6.25
 
 * After upgrading go to ActiveCampaign settings and click "Update Settings" so it reloads the form code.
+* **After upgrading go to WordPress ActiveCampaign settings and click "Update Settings" so it reloads the form code!**
 
 ### 6.1
 
