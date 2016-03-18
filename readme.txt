@@ -2,7 +2,7 @@
 Contributors: activecampaign
 Tags: activecampaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation
 Requires at least: 2
-Tested up to: 4.4
+Tested up to: 4.5
 Stable tag: trunk
 
 Add ActiveCampaign contact forms to any post, page, or sidebar. Also enable ActiveCampaign site tracking for your WordPress blog.
@@ -61,20 +61,61 @@ Please make sure that your login information is correct, and that you have at le
 
 == Changelog ==
 
-= 1.0 =
-* Initial release.
+= 6.25 =
+* Fix for SSL issue (when the page is loaded via HTTPS and the AC account uses a CNAME, forms would not show up).
+* **After upgrading go to WordPress ActiveCampaign settings and click "Update Settings" so it reloads the form code!**
 
-= 1.1 =
-* Verified this works with latest versions of WordPress and ActiveCampaign.
-* Updated installation instructions.
+= 6.2 =
+* Fix for compatibility issue with Live Composer plugin.
 
-= 2.0 =
-* Re-configured to work with ActiveCampaign version 5.4.
-* Improved some areas.
+= 6.1 =
+* Fix for issue with new forms not displaying properly.
 
-= 2.1 =
-* Changed internal API requests to use only API URL and Key instead of Username and Password.
-* Provided option to remove style blocks from embedded form code, and converting `input type="button"` into `input type="submit"`.
+= 6.0 =
+* Added support for new form builder.
+
+= 5.93 =
+* Fix for issue with captcha verification when using the Ajax ("Submit form without refreshing page") form submission option.
+
+= 5.92 =
+* Support for captcha validation when using the 'Submit form without refreshing page' (Ajax) option.
+* Added success or error CSS classes to the Ajax response div.
+
+= 5.91 =
+* Updates to avoid conflicts with other plugins using the ActiveCampaign PHP API wrapper.
+
+= 5.9 =
+* Use current user's email for site tracking.
+
+= 5.8 =
+* Security fix.
+
+= 5.7 =
+* Removed ability to add custom form "action" URL.
+
+= 5.6 =
+* Patched major security bug.
+
+= 5.5 =
+* Added site tracking (optional setting).
+
+= 5.2 =
+* Default form behavior is now "sync." This coincided with WordPress version 3.9 release.
+
+= 5.1 =
+* Added button to TinyMCE toolbar to more easily choose and embed the form shortcode into the post body.
+
+= 5.0 =
+* Added support for multiple forms. Removed widget entirely.
+
+= 4.5 =
+* Added ActiveCampaign to the Settings menu so you can use the shortcode independent of the widget.
+
+= 4.0 =
+* Added many additional settings to control how your form is displayed and submitted.
+
+= 3.5 =
+* You can now use a shortcode to display your subscription form.
 
 = 3.0 =
 * Re-wrote widget backend to use most recent WordPress Widget structure.
@@ -82,86 +123,61 @@ Please make sure that your login information is correct, and that you have at le
 * Ability to reset or refresh your forms.
 * Better form width detection.
 
-= 3.5 =
-* You can now use a shortcode to display your subscription form.
+= 2.1 =
+* Changed internal API requests to use only API URL and Key instead of Username and Password.
+* Provided option to remove style blocks from embedded form code, and converting `input type="button"` into `input type="submit"`.
 
-= 4.0 =
-* Added many additional settings to control how your form is displayed and submitted.
+= 2.0 =
+* Re-configured to work with ActiveCampaign version 5.4.
+* Improved some areas.
 
-= 4.5 =
-* Added ActiveCampaign to the Settings menu so you can use the shortcode independent of the widget.
+= 1.1 =
+* Verified this works with latest versions of WordPress and ActiveCampaign.
+* Updated installation instructions.
 
-= 5.0 =
-* Added support for multiple forms. Removed widget entirely.	
-
-= 5.1 =
-* Added button to TinyMCE toolbar to more easily choose and embed the form shortcode into the post body.
-
-= 5.2 =
-* Default form behavior is now "sync." This coincided with WordPress version 3.9 release.
-
-= 5.5 =
-* Added site tracking (optional setting).
-
-= 5.6 =
-* Patched major security bug.
-
-= 5.7 =
-* Removed ability to add custom form "action" URL.
-
-= 5.8 =
-* Security fix.
-
-= 5.9 =
-* Use current user's email for site tracking.
-
-= 5.91 =
-* Updates to avoid conflicts with other plugins using the ActiveCampaign PHP API wrapper.
-
-= 5.92 =
-* Support for captcha validation when using the 'Submit form without refreshing page' (Ajax) option.
-* Added success or error CSS classes to the Ajax response div.
-
-= 5.93 =
-* Fix for issue with captcha verification when using the Ajax ("Submit form without refreshing page") form submission option.
-
-= 6.0 =
-* Added support for new form builder.
+= 1.0 =
+* Initial release.
 
 == Upgrade Notice ==
 
-= 1.1 =
-* Installation instructions updated if you are having trouble installing it.
+= 6.25 =
+* After upgrading go to ActiveCampaign settings and click "Update Settings" so it reloads the form code.
 
-= 2.0 =
-* Version 2.0 will NOT work with ActiveCampaign versions < 5.4.
+= 6.1 =
+* After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
 
-= 2.1 =
-* This version requires the use of API URL and Key instead of Username and Password.
-
-= 4.0 =
-* If you use the Ajax option, you will need jQuery enabled for your WordPress site.
-
-= 5.0 =
-* The widget is removed entirely (in favor of the shortcode) so if you have a form in a sidebar, you'll now need to add a basic text widget with the shortcode in it. You choose your forms under the ActiveCampaign settings section.
-
-= 5.2 =
-* Default behavior of the form is now "sync" (add or update). If you had "Add Subscriber" chosen it will now perform "add or update." If you had "Sync Subscriber" chosen the behavior will remain the same.
-
-= 5.5 =
-* If site tracking is enabled it will embed some JavaScript code on each of your front-end pages.
-
-= 5.6 =
-* UPGRADE IMMEDIATELY - security bug patched (involving the API key being exposed). After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
-
-= 5.7 =
-* Custom form "action" URL's will no longer work.
-
-= 5.8 =
-* UPGRADE IMMEDIATELY - security fix. After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
+= 6.0 =
+* After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
 
 = 5.9 =
 * Site tracking users: the current logged-in user will now be associated with each page visit.
 
-= 6.0 =
-* After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
+= 5.8 =
+* UPGRADE IMMEDIATELY - security fix. After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
+
+= 5.7 =
+* Custom form "action" URL's will no longer work.
+
+= 5.6 =
+* UPGRADE IMMEDIATELY - security bug patched (involving the API key being exposed). After upgrading go to ActiveCampaign settings and click "Update" again so it reloads the form code.
+
+= 5.5 =
+* If site tracking is enabled it will embed some JavaScript code on each of your front-end pages.
+
+= 5.2 =
+* Default behavior of the form is now "sync" (add or update). If you had "Add Subscriber" chosen it will now perform "add or update." If you had "Sync Subscriber" chosen the behavior will remain the same.
+
+= 5.0 =
+* The widget is removed entirely (in favor of the shortcode) so if you have a form in a sidebar, you'll now need to add a basic text widget with the shortcode in it. You choose your forms under the ActiveCampaign settings section.
+
+= 4.0 =
+* If you use the Ajax option, you will need jQuery enabled for your WordPress site.
+
+= 2.1 =
+* This version requires the use of API URL and Key instead of Username and Password.
+
+= 2.0 =
+* Version 2.0 will NOT work with ActiveCampaign versions < 5.4.
+
+= 1.1 =
+* Installation instructions updated if you are having trouble installing it.
