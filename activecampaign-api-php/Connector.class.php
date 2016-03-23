@@ -5,12 +5,9 @@ class AC_ConnectorWordPress {
 	public $url;
 	public $api_key;
 	public $output = "json";
-	private $use_curl = true;
+	private $use_curl;
 
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
-		if (!function_exists("curl_init")) {
-			$this->use_curl = false;
-		}
 		// $api_pass should be md5() already
 		$base = "";
 		if (!preg_match("/https:\/\/www.activecampaign.com/", $url)) {
@@ -28,6 +25,14 @@ class AC_ConnectorWordPress {
 			$this->url = "{$url}{$base}/api.php?api_user={$api_user}&api_pass={$api_pass}";
 		}
 		$this->api_key = $api_key;
+	}
+
+	/**
+	 * Whether or not to use PHP's curl feature.
+	 * @return  boolean  Whether or not we are able to use PHP curl on this server.
+	 */
+	private function use_curl() {
+		return function_exists("curl_init");
 	}
 
 	public function credentials_test() {
@@ -60,6 +65,7 @@ class AC_ConnectorWordPress {
 	}
 
 	public function curl($url, $params_data = array(), $verb = "", $custom_method = "") {
+		$this->use_curl = $this->use_curl();
 		if ($this->version == 1) {
 			// find the method from the URL.
 			$method = preg_match("/api_action=[^&]*/i", $url, $matches);
