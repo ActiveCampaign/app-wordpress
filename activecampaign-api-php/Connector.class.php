@@ -193,8 +193,8 @@ class AC_ConnectorWordPress {
 			}
 		}
 		if ($this->use_curl) {
-			curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
+			curl_setopt($request, CURLOPT_SSL_VERIFYPEER, 1);
+			curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 1);
 			$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYPEER, false);\n";
 			$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYHOST, 0);\n";
 			$response = curl_exec($request);
