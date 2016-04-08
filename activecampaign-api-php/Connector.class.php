@@ -32,7 +32,9 @@ class AC_ConnectorWordPress {
 	 * @return  boolean  Whether or not we are able to use PHP curl on this server.
 	 */
 	private function use_curl() {
-		return function_exists("curl_init");
+		// Updated 04/08/2016. No need to ever use curl - it is not always configured correctly on some servers.
+		// Better to use the WordPress native HTTP library (wp_remote_get).
+		return false;
 	}
 
 	public function credentials_test() {
