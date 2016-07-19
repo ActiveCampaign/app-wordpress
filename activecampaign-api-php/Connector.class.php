@@ -207,7 +207,7 @@ class AC_ConnectorWordPress {
 			$response = wp_remote_get($url);
 
 			// If the response code is actually based off WP_ERROR Send the error back instead;
-			if(get_class($response) === 'WP_Error') {
+			if (is_object($response) && get_class($response) === 'WP_Error') {
 				foreach($response->get_error_messages() as $error) {
 					echo $error . "<br />";
 				}
