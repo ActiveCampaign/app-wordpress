@@ -56,6 +56,10 @@ Please make sure that your login information is correct, and that you have at le
 
 ## Changelog
 
+### 6.2.8
+
+* Fix for `Undefined index: css` error.
+
 ### 6.2.7
 
 * Fix for 6.2.6 change missing another check.
