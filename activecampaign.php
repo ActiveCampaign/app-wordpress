@@ -62,7 +62,7 @@ function activecampaign_form_source($settings, $form, $static = false) {
 			$source .= "static=1&";
 		}
 		$source .= sprintf("id=%d&%s", $form["id"], strtoupper(uniqid()));
-		if (!$settings["css"][$form["id"]]) {
+		if (isset($settings["css"][$form["id"]]) && !$settings["css"][$form["id"]]) {
 			$source .= "&nostyles=1";
 		}
 		$source .= "'></script>";
