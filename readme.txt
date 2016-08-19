@@ -61,6 +61,9 @@ Please make sure that your login information is correct, and that you have at le
 
 == Changelog ==
 
+= 6.2.9 =
+* Fix for "Keep original form CSS" checkbox not being respected.
+
 = 6.2.8 =
 * Fix for `Undefined index: css` error.
 

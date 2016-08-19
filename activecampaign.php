@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: <strong>IMPORTANT - Only upgrade to version 6.25 if you are using the latest ActiveCampaign forms version! After upgrading go to the WordPress ActiveCampaign settings and click "Update Settings."</strong> -- Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 6.2.8
+Version: 6.2.9
 Author URI: http://www.activecampaign.com
 */
 
@@ -35,6 +35,7 @@ Author URI: http://www.activecampaign.com
 ## version 6.2.6: Fix for certain error messages not being displayed properly.
 ## version 6.2.7: Fix for 6.2.6 change missing another check.
 ## version 6.2.8: Fix for `Undefined index: css` error.
+## version 6.2.9: Fix for "Keep original form CSS" checkbox not being respected.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -63,7 +64,7 @@ function activecampaign_form_source($settings, $form, $static = false) {
 			$source .= "static=1&";
 		}
 		$source .= sprintf("id=%d&%s", $form["id"], strtoupper(uniqid()));
-		if (isset($settings["css"][$form["id"]]) && !$settings["css"][$form["id"]]) {
+		if (!isset($settings["css"][$form["id"]]) || !$settings["css"][$form["id"]]) {
 			$source .= "&nostyles=1";
 		}
 		$source .= "'></script>";
