@@ -205,6 +205,14 @@ class AC_ConnectorWordPress {
 			// Use native WordPress HTTP method.
 			// We only need GET support because our WordPress plugin doesn't currently make any other type of requests.
 			$response = wp_remote_get($url);
+
+			// If the response code is actually based off WP_ERROR Send the error back instead;
+			if (is_object($response) && get_class($response) === 'WP_Error') {
+				foreach($response->get_error_messages() as $error) {
+					echo $error . "<br />";
+				}
+				exit;
+			}
 		}
 		if ($this->debug) {
 			$this->dbg($response, 1, "pre", "Description: Raw response");
