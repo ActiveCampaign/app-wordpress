@@ -2,9 +2,9 @@
 /*
 Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
-Description: <strong>IMPORTANT - Only upgrade to version 6.25 if you are using the latest ActiveCampaign forms version! After upgrading go to the WordPress ActiveCampaign settings and click "Update Settings."</strong> -- Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
+Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 6.2.9
+Version: 6.2.10
 Author URI: http://www.activecampaign.com
 */
 
@@ -36,6 +36,7 @@ Author URI: http://www.activecampaign.com
 ## version 6.2.7: Fix for 6.2.6 change missing another check.
 ## version 6.2.8: Fix for `Undefined index: css` error.
 ## version 6.2.9: Fix for "Keep original form CSS" checkbox not being respected.
+## version 6.2.10: Limit amount of ActiveCampaign account data shown in JavaScript (for site tracking).
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -767,8 +768,10 @@ function activecampaign_frontend_scripts() {
 	}
 	// any data we need to access in JavaScript.
 	$data = array(
-		"site_url" => __(site_url()),
-		"ac_settings" => $settings,
+		"ac_settings" => array(
+			"site_tracking" => $settings["site_tracking"],
+			"tracking_actid" => $settings["tracking_actid"],
+		),
 		"user_email" => $user_email,
 	);
 	wp_localize_script("site_tracking", "php_data", $data);
