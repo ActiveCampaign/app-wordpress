@@ -38,6 +38,7 @@ Author URI: http://www.activecampaign.com
 ## version 6.2.9: Fix for "Keep original form CSS" checkbox not being respected.
 ## version 6.2.10: Limit amount of ActiveCampaign account data shown in JavaScript (for site tracking).
 ## version 6.2.11: Fix for when the "site_tracking" key is undefined.
+## version 6.2.12: Fix for when the "form_id" key is undefined.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -284,7 +285,7 @@ function activecampaign_plugin_options() {
 
 						$checked = "";
 						$options_visibility = "none";
-						if ($instance["form_id"] && in_array($form["id"], $instance["form_id"])) {
+						if (isset($instance["form_id"]) && $instance["form_id"] && in_array($form["id"], $instance["form_id"])) {
 							$checked = "checked=\"checked\"";
 							$form_checked = 1;
 							$options_visibility = "block";
