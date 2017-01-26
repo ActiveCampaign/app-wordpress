@@ -56,6 +56,10 @@ Please make sure that your login information is correct, and that you have at le
 
 ## Changelog
 
+### 6.2.12
+
+* Fix for when the "form_id" key is undefined.
+
 ### 6.2.11
 
 * Fix for when the "site_tracking" key is undefined.
