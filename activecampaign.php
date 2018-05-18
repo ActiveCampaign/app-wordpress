@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 6.2.11
+Version: 6.2.12
 Author URI: http://www.activecampaign.com
 */
 
@@ -270,7 +270,7 @@ function activecampaign_plugin_options() {
 					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 30px;" />
 
 					<h3><?php echo __("Subscription Forms", "menu-activecampaign"); ?></h3>
-					<p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'><i><?php echo __("Choose subscription forms to cache locally. To add new forms go to your <a href=\"http://" . $instance["account"] . "/admin/main.php?action=form\" target=\"_blank\" style='color: #23538C !important;'>ActiveCampaign > Integration section</a>.", "menu-activecampaign"); ?></i></p>
+					<p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'><?php echo __("Choose subscription forms to cache locally. To add new forms go to your <a href=\"http://" . $instance["account"] . "/admin/main.php?action=form\" target=\"_blank\" style='color: #23538C !important;'>ActiveCampaign > Integration section</a>.", "menu-activecampaign"); ?></p>
 
 					<?php
 
@@ -342,12 +342,30 @@ function activecampaign_plugin_options() {
 
 					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin: 30px 0 20px 0;" />
 
-					<h3><?php echo __("Site Tracking", "menu-activecampaign"); ?></h3>
-					<p><i><?php echo __("Site tracking lets you record visitor history on your site to use for targeted segmenting. Learn more on the <a href=\"http://" . $instance["account"] . "/track/\" target=\"_blank\" style='color: #23538C !important;'>ActiveCampaign > Integration section</a>.", "menu-activecampaign"); ?></i></p>
+					<div class="activecampaign_site_tracking">
 
-					<input type="checkbox" name="site_tracking" id="activecampaign_site_tracking" value="1" <?php echo $settings_st_checked; ?> onchange="site_tracking_toggle(this.checked);" />
-					<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
-					(<a href="http://www.activecampaign.com/help/site-event-tracking/" style='color: #23538C !important;' target="_blank">?</a>)
+						<h3><?php echo __("Site Tracking", "menu-activecampaign"); ?></h3>
+						<p><?php echo __("Site tracking lets you record visitor history on your site to use for targeted segmenting. Learn more <a href=\"http://" . $instance["account"] . "/track/\" target=\"_blank\" style='font-weight: bold; color: #23538C !important;'>here</a>.", "menu-activecampaign"); ?></p>
+
+						<label>
+							<input type="checkbox" name="site_tracking" id="activecampaign_site_tracking" value="1" <?php echo $settings_st_checked; ?> onchange="site_tracking_toggle(this.checked);">
+							<span class="slider round"></span>
+						</label>
+						<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
+
+						<p class="version_info"><?php echo __("In an effort to prepare you for GDPR, we require that you select a version of site tracking. Read more about GDPR here.", "menu-activecampaign") ?></p>
+
+						<input type="radio" id="activecampaign_site_tracking_default_on" name="activecampaign_site_tracking_default" value="on" />
+						<label for="activecampaign_site_tracking_default_on"><?php echo __("Track by default", "menu-activecampaign"); ?></label>
+						<p><?php echo __("By selecting this option, you'll get a nice explanation here.", "menu-activecampaign"); ?></p>
+
+						<br />
+
+						<input type="radio" id="activecampaign_site_tracking_default_off" name="activecampaign_site_tracking_default" value="off" />
+						<label for="activecampaign_site_tracking_default_off"><?php echo __("Do not track by default", "menu-activecampaign"); ?></label>
+						<p><?php echo __("By selecting this option, you'll get a nice explanation here.", "menu-activecampaign"); ?></p>
+
+					</div>
 
 					<script type='text/javascript'>
 
@@ -752,7 +770,7 @@ function activecampaign_get_forms_html_callback() {
 
 function activecampaign_custom_wp_admin_style() {
 	wp_register_style("activecampaign-subscription-forms", "//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css");
-	wp_enqueue_style("activecampaign-subscription-forms");
+	wp_enqueue_style("activecampaign-settings", plugins_url("admin_styles.css", __FILE__));
 	wp_enqueue_script("jquery-ui-dialog");
 	wp_enqueue_style("wp-jquery-ui-dialog");
 }
