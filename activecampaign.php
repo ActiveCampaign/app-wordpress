@@ -809,12 +809,16 @@ function activecampaign_frontend_scripts() {
 	$data = array(
 		"ac_settings" => array(
 			"tracking_actid" => $settings["tracking_actid"],
+			"site_tracking_default" => 1,
 		),
 		"user_email" => $user_email,
 	);
 	if (isset($settings["site_tracking"])) {
 		// This will only be set if the checkbox is checked on the ActiveCampaign settings page.
 		$data["ac_settings"]["site_tracking"] = 1;
+		if (isset($settings["activecampaign_site_tracking_default"])) {
+			$data["ac_settings"]["site_tracking_default"] = (int)$settings["activecampaign_site_tracking_default"];
+		}
 	}
 	wp_localize_script("site_tracking", "php_data", $data);
 }
