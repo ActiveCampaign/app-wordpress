@@ -39,6 +39,7 @@ Author URI: http://www.activecampaign.com
 ## version 6.2.10: Limit amount of ActiveCampaign account data shown in JavaScript (for site tracking).
 ## version 6.2.11: Fix for when the "site_tracking" key is undefined.
 ## version 6.2.12: Fix for when the "form_id" key is undefined.
+## version 6.3: Added site tracking options for GDPR
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");

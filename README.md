@@ -56,6 +56,10 @@ Please make sure that your login information is correct, and that you have at le
 
 ## Changelog
 
+### 6.3
+
+* Added site tracking options for GDPR.
+
 ### 6.2.12
 
 * Fix for when the "form_id" key is undefined.
@@ -185,10 +189,13 @@ Please make sure that your login information is correct, and that you have at le
 
 ## Upgrade Notice
 
+### 6.3
+
+* After upgrading go to ActiveCampaign settings and make sure your Site Tracking setting and options are set appropriately
+
 ### 6.25
 
 * After upgrading go to ActiveCampaign settings and click "Update Settings" so it reloads the form code.
-* **After upgrading go to WordPress ActiveCampaign settings and click "Update Settings" so it reloads the form code!**
 
 ### 6.1
 
