@@ -1,7 +1,7 @@
 if (typeof(php_data.ac_settings.site_tracking) != "undefined" && php_data.ac_settings.site_tracking == "1") {
 
 	// Set to false if opt-in required
-	var trackByDefault = false;
+	var trackByDefault = php_data.ac_settings.site_tracking_default;
 
 	function acEnableTracking() {
 		var expiration = new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 30);
