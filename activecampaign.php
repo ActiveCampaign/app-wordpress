@@ -277,8 +277,14 @@ function activecampaign_plugin_options() {
 					// just a flag to know if ANY form is checked (chosen)
 					$form_checked = 0;
 
-					$settings_st_set = isset($instance["site_tracking"]) && (int)$instance["site_tracking"];
-					$settings_st_checked = $settings_st_set ? "checked=\"checked\"" : "";
+					// "Enable Site Tracking" toggle
+					$settings_st_enabled = isset($instance["site_tracking"]) && (int)$instance["site_tracking"];
+					$settings_st_checked = $settings_st_enabled ? "checked=\"checked\"" : "";
+
+					// Site Tracking default option
+					$settings_st_default_on = isset($instance["activecampaign_site_tracking_default"]) && (int)$instance["activecampaign_site_tracking_default"];
+					$settings_st_default_on_checked = $settings_st_default_on ? "checked=\"checked\"" : "";
+					$settings_st_default_off_checked = ! $settings_st_default_on_checked ? "checked=\"checked\"" : "";
 
 					foreach ($instance["forms"] as $form) {
 
@@ -357,17 +363,17 @@ function activecampaign_plugin_options() {
 						</label>
 						<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
 
-						<div id="activecampaign_site_tracking_options" class="<?php echo (! $settings_st_set) ? 'disabled' : ''; ?>">
+						<div id="activecampaign_site_tracking_options" class="<?php echo (! $settings_st_enabled) ? 'disabled' : ''; ?>">
 
 							<p class="version_info">
 								<?php echo __("Next, select your site tracking option:", "menu-activecampaign") ?>
 							</p>
 
-							<input type="radio" id="activecampaign_site_tracking_default_on" name="activecampaign_site_tracking_default" value="on" />
+							<input type="radio" id="activecampaign_site_tracking_default_on" name="activecampaign_site_tracking_default" value="1" <?php echo $settings_st_default_on_checked; ?> />
 							<label for="activecampaign_site_tracking_default_on"><?php echo __("Track by default", "menu-activecampaign"); ?></label>
 							<p><?php echo __("This option will track all known contacts by default, and will not provide an additional tracking consent notice to your contacts.", "menu-activecampaign"); ?></p>
 
-							<input type="radio" id="activecampaign_site_tracking_default_off" name="activecampaign_site_tracking_default" value="off" />
+							<input type="radio" id="activecampaign_site_tracking_default_off" name="activecampaign_site_tracking_default" value="0" <?php echo $settings_st_default_off_checked; ?> />
 							<label for="activecampaign_site_tracking_default_off"><?php echo __("Do not track by default", "menu-activecampaign"); ?></label>
 							<p>
 								<?php echo __("This option will not track all known contacts by default. Your contacts will only be tracked after they confirm tracking consent. You must develop a tracking consent notice, and connect it to this plugin, to use this option. Learn more about", "menu-activecampaign"); ?>
