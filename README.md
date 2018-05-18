@@ -191,7 +191,7 @@ Please make sure that your login information is correct, and that you have at le
 
 ### 6.3
 
-* After upgrading go to ActiveCampaign settings and make sure your Site Tracking setting and options are set appropriately
+* After upgrading go to ActiveCampaign settings and make sure your Site Tracking setting and options are set appropriately.
 
 ### 6.25
 
