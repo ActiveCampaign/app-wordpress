@@ -1,5 +1,5 @@
-body {
-
+.activecampaign_site_tracking {
+	width: 550px;
 }
 
 .activecampaign_site_tracking h3 + p a {
@@ -67,6 +67,11 @@ body {
 .activecampaign_site_tracking .version_info {
 	font-weight: bold;
 	margin-top: 50px;
+}
+
+#activecampaign_site_tracking_default_on  + label,
+#activecampaign_site_tracking_default_off + label {
+	font-weight: bold;
 }
 
 #activecampaign_site_tracking_default_on  + label + p,
