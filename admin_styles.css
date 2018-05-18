@@ -2,6 +2,11 @@ body {
 
 }
 
+.activecampaign_site_tracking h3 + p a {
+	color: #23538C !important;
+	font-weight: bold;
+}
+
 .activecampaign_site_tracking label:first-of-type {
 	display: inline-block;
 	height: 34px;
@@ -66,5 +71,5 @@ body {
 
 #activecampaign_site_tracking_default_on  + label + p,
 #activecampaign_site_tracking_default_off + label + p {
-	margin-left: 25px;
+	margin: 10px 0 30px 25px;
 }

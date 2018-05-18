@@ -345,7 +345,10 @@ function activecampaign_plugin_options() {
 					<div class="activecampaign_site_tracking">
 
 						<h3><?php echo __("Site Tracking", "menu-activecampaign"); ?></h3>
-						<p><?php echo __("Site tracking lets you record visitor history on your site to use for targeted segmenting. Learn more <a href=\"http://" . $instance["account"] . "/track/\" target=\"_blank\" style='font-weight: bold; color: #23538C !important;'>here</a>.", "menu-activecampaign"); ?></p>
+						<p>
+							<?php echo __("Site tracking enables you to record visitor history on your site to use for targeted segmenting. Tracking includes page visits and IP addresses for all known contacts. Note: This is considered personal data.", "menu-activecampaign"); ?>
+							<a href="https://help.activecampaign.com/hc/en-us/articles/221542267-An-overview-of-Site-Tracking" target="_blank"><?php echo __("Learn more about site tracking"); ?></a>.
+						</p>
 
 						<label>
 							<input type="checkbox" name="site_tracking" id="activecampaign_site_tracking" value="1" <?php echo $settings_st_checked; ?> onchange="site_tracking_toggle(this.checked);">
@@ -353,17 +356,20 @@ function activecampaign_plugin_options() {
 						</label>
 						<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
 
-						<p class="version_info"><?php echo __("In an effort to prepare you for GDPR, we require that you select a version of site tracking. Read more about GDPR here.", "menu-activecampaign") ?></p>
+						<p class="version_info">
+							<?php echo __("Next, select your site tracking option:", "menu-activecampaign") ?>
+						</p>
 
 						<input type="radio" id="activecampaign_site_tracking_default_on" name="activecampaign_site_tracking_default" value="on" />
 						<label for="activecampaign_site_tracking_default_on"><?php echo __("Track by default", "menu-activecampaign"); ?></label>
-						<p><?php echo __("By selecting this option, you'll get a nice explanation here.", "menu-activecampaign"); ?></p>
-
-						<br />
+						<p><?php echo __("This option will track all known contacts by default, and will not provide an additional tracking consent notice to your contacts.", "menu-activecampaign"); ?></p>
 
 						<input type="radio" id="activecampaign_site_tracking_default_off" name="activecampaign_site_tracking_default" value="off" />
 						<label for="activecampaign_site_tracking_default_off"><?php echo __("Do not track by default", "menu-activecampaign"); ?></label>
-						<p><?php echo __("By selecting this option, you'll get a nice explanation here.", "menu-activecampaign"); ?></p>
+						<p>
+							<?php echo __("This option will not track all known contacts by default. Your contacts will only be tracked after they confirm tracking consent. You must develop a tracking consent notice, and connect it to this plugin, to use this option. Learn more about", "menu-activecampaign"); ?>
+							<a href="https://help.activecampaign.com/hc/en-us/articles/360000872064-Site-tracking-and-the-GDPR" target="_blank"><?php echo __("Site tracking and the GDPR", "menu-activecampaign") ?></a>.
+						</p>
 
 					</div>
 
