@@ -277,7 +277,8 @@ function activecampaign_plugin_options() {
 					// just a flag to know if ANY form is checked (chosen)
 					$form_checked = 0;
 
-					$settings_st_checked = (isset($instance["site_tracking"]) && (int)$instance["site_tracking"]) ? "checked=\"checked\"" : "";
+					$settings_st_set = isset($instance["site_tracking"]) && (int)$instance["site_tracking"];
+					$settings_st_checked = $settings_st_set ? "checked=\"checked\"" : "";
 
 					foreach ($instance["forms"] as $form) {
 
@@ -356,20 +357,24 @@ function activecampaign_plugin_options() {
 						</label>
 						<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
 
-						<p class="version_info">
-							<?php echo __("Next, select your site tracking option:", "menu-activecampaign") ?>
-						</p>
+						<div id="activecampaign_site_tracking_options" class="<?php echo (! $settings_st_set) ? 'disabled' : ''; ?>">
 
-						<input type="radio" id="activecampaign_site_tracking_default_on" name="activecampaign_site_tracking_default" value="on" />
-						<label for="activecampaign_site_tracking_default_on"><?php echo __("Track by default", "menu-activecampaign"); ?></label>
-						<p><?php echo __("This option will track all known contacts by default, and will not provide an additional tracking consent notice to your contacts.", "menu-activecampaign"); ?></p>
+							<p class="version_info">
+								<?php echo __("Next, select your site tracking option:", "menu-activecampaign") ?>
+							</p>
 
-						<input type="radio" id="activecampaign_site_tracking_default_off" name="activecampaign_site_tracking_default" value="off" />
-						<label for="activecampaign_site_tracking_default_off"><?php echo __("Do not track by default", "menu-activecampaign"); ?></label>
-						<p>
-							<?php echo __("This option will not track all known contacts by default. Your contacts will only be tracked after they confirm tracking consent. You must develop a tracking consent notice, and connect it to this plugin, to use this option. Learn more about", "menu-activecampaign"); ?>
-							<a href="https://help.activecampaign.com/hc/en-us/articles/360000872064-Site-tracking-and-the-GDPR" target="_blank"><?php echo __("Site tracking and the GDPR", "menu-activecampaign") ?></a>.
-						</p>
+							<input type="radio" id="activecampaign_site_tracking_default_on" name="activecampaign_site_tracking_default" value="on" />
+							<label for="activecampaign_site_tracking_default_on"><?php echo __("Track by default", "menu-activecampaign"); ?></label>
+							<p><?php echo __("This option will track all known contacts by default, and will not provide an additional tracking consent notice to your contacts.", "menu-activecampaign"); ?></p>
+
+							<input type="radio" id="activecampaign_site_tracking_default_off" name="activecampaign_site_tracking_default" value="off" />
+							<label for="activecampaign_site_tracking_default_off"><?php echo __("Do not track by default", "menu-activecampaign"); ?></label>
+							<p>
+								<?php echo __("This option will not track all known contacts by default. Your contacts will only be tracked after they confirm tracking consent. You must develop a tracking consent notice, and connect it to this plugin, to use this option. Learn more about", "menu-activecampaign"); ?>
+								<a href="https://help.activecampaign.com/hc/en-us/articles/360000872064-Site-tracking-and-the-GDPR" target="_blank"><?php echo __("Site tracking and the GDPR", "menu-activecampaign") ?></a>.
+							</p>
+
+						</div>
 
 					</div>
 
@@ -423,6 +428,8 @@ function activecampaign_plugin_options() {
 						}
 
 						function site_tracking_toggle(is_checked) {
+							var site_tracking_options = document.getElementById("activecampaign_site_tracking_options");
+							site_tracking_options.className = is_checked ? "" : "disabled";
 							// we can't allow site tracking if ajax is used because that uses the API.
 							// so here we check to see if they have chosen ajax for any form, an if so alert them and uncheck the ajax options.
 							if (is_checked)  {

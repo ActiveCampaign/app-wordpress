@@ -64,9 +64,13 @@
   border-radius: 50%;
 }
 
-.activecampaign_site_tracking .version_info {
+#activecampaign_site_tracking_options.disabled {
+	display: none;
+}
+
+#activecampaign_site_tracking_options .version_info {
 	font-weight: bold;
-	margin-top: 50px;
+	margin-top: 45px;
 }
 
 #activecampaign_site_tracking_default_on  + label,
