@@ -359,7 +359,8 @@ function activecampaign_plugin_options() {
 						</p>
 
 						<label>
-							<input type="checkbox" name="site_tracking" id="activecampaign_site_tracking" value="1" <?php echo $settings_st_checked; ?> onchange="site_tracking_toggle(this.checked);">
+							<input type="hidden" name="site_tracking" value="<?php echo (int)$settings_st_enabled; ?>" />
+							<input type="checkbox" id="activecampaign_site_tracking" <?php echo $settings_st_checked; ?> onchange="site_tracking_toggle(this.checked);">
 							<span class="slider round"></span>
 						</label>
 						<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
@@ -435,8 +436,15 @@ function activecampaign_plugin_options() {
 						}
 
 						function site_tracking_toggle(is_checked) {
+
+							// Set the hidden element based on whether site tracking is enabled or not
+							var hiddenSiteTracking = document.getElementsByName("site_tracking")[0];
+							hiddenSiteTracking.value = is_checked ? 1 : 0;
+
+							// Pre-select the correct radio option underneath "Site Tracking"
 							var site_tracking_options = document.getElementById("activecampaign_site_tracking_options");
 							site_tracking_options.className = is_checked ? "" : "disabled";
+
 							// we can't allow site tracking if ajax is used because that uses the API.
 							// so here we check to see if they have chosen ajax for any form, an if so alert them and uncheck the ajax options.
 							if (is_checked)  {
@@ -460,6 +468,7 @@ function activecampaign_plugin_options() {
 									}
 								}
 							}
+
 						}
 
 					</script>
@@ -814,7 +823,7 @@ function activecampaign_frontend_scripts() {
 		),
 		"user_email" => $user_email,
 	);
-	if (isset($settings["site_tracking"])) {
+	if (isset($settings["site_tracking"]) && (int)$settings["site_tracking"]) {
 		// This will only be set if the checkbox is checked on the ActiveCampaign settings page.
 		$data["ac_settings"]["site_tracking"] = 1;
 		if (isset($settings["activecampaign_site_tracking_default"])) {
