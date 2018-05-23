@@ -1,0 +1,78 @@
+.activecampaign_site_tracking {
+	width: 550px;
+}
+
+.activecampaign_site_tracking > label:first-of-type {
+	display: inline-block;
+	height: 26px;
+	position: relative;
+	width: 51px;
+}
+
+.activecampaign_site_tracking label:first-of-type input {
+	display: none;
+}
+
+.activecampaign_site_tracking span {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.activecampaign_site_tracking span:before {
+	position: absolute;
+	content: "";
+	height: 22px;
+	width: 22px;
+	left: 2px;
+	bottom: 2px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.activecampaign_site_tracking label:first-of-type input:checked + .slider {
+	background-color: #15629f;
+}
+
+.activecampaign_site_tracking label:first-of-type input:focus + .slider {
+	box-shadow: 0 0 1px #15629f;
+}
+
+.activecampaign_site_tracking label:first-of-type input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+.activecampaign_site_tracking .slider.round {
+	border-radius: 34px;
+}
+
+.activecampaign_site_tracking .slider.round:before {
+	border-radius: 50%;
+}
+
+#activecampaign_site_tracking_options {
+	margin-top: 40px;
+}
+
+#activecampaign_site_tracking_options.disabled {
+	display: none;
+}
+
+#activecampaign_site_tracking_default_on  + label,
+#activecampaign_site_tracking_default_off + label {
+	font-weight: bold;
+}
+
+#activecampaign_site_tracking_default_on  + label + p,
+#activecampaign_site_tracking_default_off + label + p {
+	margin: 10px 0 30px 25px;
+}
