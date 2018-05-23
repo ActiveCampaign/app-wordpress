@@ -2,11 +2,6 @@
 	width: 550px;
 }
 
-.activecampaign_site_tracking h3 + p a {
-	color: #23538C !important;
-	font-weight: bold;
-}
-
 .activecampaign_site_tracking > label:first-of-type {
 	display: inline-block;
 	height: 26px;
