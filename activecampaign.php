@@ -283,7 +283,21 @@ function activecampaign_plugin_options() {
 					$settings_st_checked = $settings_st_enabled ? "checked=\"checked\"" : "";
 
 					// Site Tracking default option
-					$settings_st_default_on = isset($instance["activecampaign_site_tracking_default"]) && (int)$instance["activecampaign_site_tracking_default"];
+					/* Default to "Track by default" option if any of these are true:
+					 1. It's already been chosen and saved
+					 2. Site tracking is just being enabled for the first time
+					 3. Site tracking was already enabled but the new default options are not set yet
+					*/
+					$settings_st_default_on = (
+						(
+							isset($instance["activecampaign_site_tracking_default"]) &&
+							(int)$instance["activecampaign_site_tracking_default"]
+						)
+						||
+						! isset($instance["site_tracking"])
+						||
+						! isset($instance["activecampaign_site_tracking_default"])
+					);
 					$settings_st_default_on_checked = $settings_st_default_on ? "checked=\"checked\"" : "";
 					$settings_st_default_off_checked = ! $settings_st_default_on_checked ? "checked=\"checked\"" : "";
 
@@ -366,10 +380,6 @@ function activecampaign_plugin_options() {
 						<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
 
 						<div id="activecampaign_site_tracking_options" class="<?php echo (! $settings_st_enabled) ? 'disabled' : ''; ?>">
-
-							<p class="version_info">
-								<?php echo __("Next, select your site tracking option:", "menu-activecampaign") ?>
-							</p>
 
 							<input type="radio" id="activecampaign_site_tracking_default_on" name="activecampaign_site_tracking_default" value="1" <?php echo $settings_st_default_on_checked; ?> />
 							<label for="activecampaign_site_tracking_default_on"><?php echo __("Track by default", "menu-activecampaign"); ?></label>
