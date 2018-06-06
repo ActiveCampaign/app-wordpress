@@ -59,6 +59,7 @@ Please make sure that your login information is correct, and that you have at le
 ### 7.0
 
 * Force upgrade prompt for users on 6.25.
+    * The prior version (6.3) is technically smaller than 6.25 in semantic versioning so users on 6.25 won't ever see an upgrade prompt unless we got to 6.25.1 or 6.26.
 
 ### 6.3
 
