@@ -2,7 +2,7 @@
 Contributors: activecampaign
 Tags: activecampaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation
 Requires at least: 2
-Tested up to: 4.7
+Tested up to: 4.9.6
 Stable tag: trunk
 
 Add ActiveCampaign contact forms to any post, page, or sidebar. Also enable ActiveCampaign site tracking for your WordPress blog.
@@ -60,6 +60,10 @@ Please make sure that your login information is correct, and that you have at le
 5. Adding a form to the sidebar
 
 == Changelog ==
+
+= 7.0 =
+* Force upgrade prompt for users on 6.25.
+    * The prior version (6.3) is technically smaller than 6.25 in semantic versioning so users on 6.25 won't ever see an upgrade prompt unless we got to 6.25.1 or 6.26.
 
 = 6.3 =
 * Added site tracking options for GDPR.
