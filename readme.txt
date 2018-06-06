@@ -61,6 +61,9 @@ Please make sure that your login information is correct, and that you have at le
 
 == Changelog ==
 
+= 7.0 =
+* Force upgrade prompt for users on 6.25.
+
 = 6.3 =
 * Added site tracking options for GDPR.
 
