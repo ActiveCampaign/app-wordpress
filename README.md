@@ -56,6 +56,10 @@ Please make sure that your login information is correct, and that you have at le
 
 ## Changelog
 
+### 7.1
+
+* Update Site Tracking snippet to route through Prism.
+
 ### 7.0
 
 * Force upgrade prompt for users on 6.25.
