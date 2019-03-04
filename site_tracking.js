@@ -3,6 +3,11 @@ if (typeof(php_data.ac_settings.site_tracking) != "undefined" && php_data.ac_set
 
 	pgo('setAccount', php_data.ac_settings.tracking_actid);
 	pgo('setTrackByDefault', php_data.ac_settings.site_tracking_default == "1");
+
+	if (typeof trackcmp_email !== 'undefined') {
+		pgo('setEmail', trackcmp_email);
+	}
+
 	pgo('process');
 
 	function acEnableTracking() {
