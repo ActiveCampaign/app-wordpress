@@ -1,19 +1,24 @@
-=== ActiveCampaign ===
+=== ActiveCampaign - Forms, Site Tracking, Live Chat ===
 Contributors: activecampaign
 Tags: activecampaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation
 Requires at least: 2
 Tested up to: 4.9.6
 Stable tag: trunk
 
-Add ActiveCampaign contact forms to any post, page, or sidebar. Also enable ActiveCampaign site tracking for your WordPress blog.
+Add ActiveCampaign contact forms and live chat to any post, page, or sidebar. Also enable ActiveCampaign site tracking for your WordPress blog.
 
 == Description ==
 
-Connect your WordPress blog with your ActiveCampaign email marketing platform. Embed subscription forms designed in ActiveCampaign directly into any post, page, or sidebar. Also allows you to enable [ActiveCampaign site tracking](http://www.activecampaign.com/help/site-event-tracking/) with your Wordpress blog.
+The ActiveCampaign Wordpress plug-in allows you to:
+1. Embed ActiveCampaign forms directly into any post, page, or sidebar
+2. Use Site tracking to track visitors to your website
+3. Enable live chat for accounts using Conversations
 
-After installing go to Settings > ActiveCampaign to activate this plugin. You will need your [ActiveCampaign API URL and key](http://www.activecampaign.com/help/using-the-api/), and at least one integration form created in your ActiveCampaign account.
+After installation, go to Settings > ActiveCampaign to activate this plugin. You will need your ActiveCampaign API URL and key, and at least one integration form created in your ActiveCampaign account.
 
-[Sign up for your free account](http://www.activecampaign.com/free/) to get started.
+The live chat feature is part of Conversations, a multi-channel customer communication tool available as an add-on for all ActiveCampaign accounts. You can learn more [here](https://www.activecampaign.com/customer-messaging/conversations).
+
+Don’t have an ActiveCampaign account? [Sign up for a free trial](http://www.activecampaign.com/free/) to get started.
 
 == Installation ==
 
@@ -47,6 +52,14 @@ If you enable the "Ajax" option of the plugin settings, you can have the form su
 
 Yes, you would just make sure that your form settings (in ActiveCampaign) have the Opt-in confirmation setting checked.
 
+= How does live chat work? =
+
+Live chat is a feature of Conversations, an add-on available to ActiveCampaign users that enables multi-channel communication with your customers through a unified inbox. To activate live chat for your Wordpress website you must first start a trial or purchase Conversations. Learn more [here](https://www.activecampaign.com/customer-messaging/conversations).
+
+= How will I know I have received a live chat message from a visitor? =
+
+All live chat messages will display in the Conversations inbox in your ActiveCampaign account. You can receive desktop and audio notifications when the messages are received, or use our Conversations mobile app (available for iOS and Android) to get push notifications on your phone and respond on the go.
+
 = I get a "Connection failed" message. What does this mean? =
 
 Please make sure that your login information is correct, and that you have at least one Integration form already created in the ActiveCampaign system.
@@ -58,8 +71,13 @@ Please make sure that your login information is correct, and that you have at le
 3. Using the [activecampaign] shortcode in a blog post
 4. Viewing the output of the [activecampaign] shortcode
 5. Adding a form to the sidebar
+6. Adding multiple forms
+7. Conversations chat widget
 
 == Changelog ==
+
+= 7.1 =
+* Update plug-in to enable Live Chat.
 
 = 7.0 =
 * Force upgrade prompt for users on 6.25.
