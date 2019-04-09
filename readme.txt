@@ -76,6 +76,9 @@ Please make sure that your login information is correct, and that you have at le
 
 == Changelog ==
 
+= 7.1.1 =
+* Include our own host header on requests.
+
 = 7.1 =
 * Update plug-in to enable Live Chat.
 
