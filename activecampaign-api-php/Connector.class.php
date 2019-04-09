@@ -204,7 +204,8 @@ class AC_ConnectorWordPress {
 		} else {
 			// Use native WordPress HTTP method.
 			// We only need GET support because our WordPress plugin doesn't currently make any other type of requests.
-			$response = wp_remote_get($url);
+			$args = array( 'headers' => array( 'user-agent' => 'ActiveCampaign WordPress Plugin' ) );
+			$response = wp_remote_get( $url, $args );
 
 			// If the response code is actually based off WP_ERROR Send the error back instead;
 			if (is_object($response) && get_class($response) === 'WP_Error') {
