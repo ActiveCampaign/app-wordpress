@@ -71,6 +71,11 @@ Please make sure that your login information is correct, and that you have at le
 
 ## Changelog
 
+### 7.1.2
+* Update tracking code copy to be more specific to Site Tracking and Conversations.
+* Fix old link to Forms page.
+* Make install code toggle focusable.
+
 ### 7.1.1
 * Include our own host header on requests.
 
