@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 7.1.1
+Version: 7.1.2
 Author URI: http://www.activecampaign.com
 */
 
@@ -43,6 +43,7 @@ Author URI: http://www.activecampaign.com
 ## version 7.0: Force upgrade prompt for users on 6.25
 ## version 7.1: Update Site Tracking snippet to route through Prism.
 ## version 7.1.1: Include our own host header on requests.
+## version 7.1.2: Update tracking code copy to be more specific to Site Tracking and Conversations. Fix old link to Forms page. Make install code toggle focusable.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -151,7 +152,7 @@ function activecampaign_plugin_options() {
 				// get forms.
 				$instance = activecampaign_getforms($ac, $instance);
 				$instance = activecampaign_form_html($ac, $instance);
-				
+
 				$connected = true;
 
 			}
@@ -205,7 +206,7 @@ function activecampaign_plugin_options() {
 		<div id="icon-options-general" class="icon32"><br></div>
 
 		<h2><?php echo __("ActiveCampaign Settings", "menu-activecampaign"); ?></h2>
-	
+
 		<p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'>
 			<?php
 
@@ -213,7 +214,7 @@ function activecampaign_plugin_options() {
 
 			?>
 		</p>
-	
+
 		<form name="activecampaign_settings_form" method="post" action="" style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'>
 
 			<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 30px;" />
@@ -247,7 +248,7 @@ function activecampaign_plugin_options() {
 					?>
 
 					<p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'><?php echo __("Get your API credentials from the Settings > Developer section:", "menu-activecampaign"); ?></p>
-		
+
 					<p><img src="<?php echo plugins_url("activecampaign-subscription-forms"); ?>/settings1.png" /></p>
 
 					<?php
@@ -274,7 +275,7 @@ function activecampaign_plugin_options() {
 					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 30px;" />
 
 					<h3><?php echo __("Subscription Forms", "menu-activecampaign"); ?></h3>
-					<p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'><?php echo __("Choose subscription forms to cache locally. To add new forms go to your <a href=\"http://" . $instance["account"] . "/admin/main.php?action=form\" target=\"_blank\" style='color: #23538C !important;'>ActiveCampaign > Integration section</a>.", "menu-activecampaign"); ?></p>
+					<p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'><?php echo __("Choose subscription forms to cache locally. To add new forms go to <a href=\"http://" . $instance["account"] . "/app/forms\" target=\"_blank\" style='color: #23538C !important;'>ActiveCampaign > Forms</a>.", "menu-activecampaign"); ?></p>
 
 					<?php
 
@@ -337,7 +338,7 @@ function activecampaign_plugin_options() {
 						<input type="checkbox" name="form_id[]" id="activecampaign_form_<?php echo $form["id"]; ?>" value="<?php echo $form["id"]; ?>" onclick="toggle_form_options(this.value, this.checked);" <?php echo $checked; ?> />
 						<label for="activecampaign_form_<?php echo $form["id"]; ?>"><a href="http://<?php echo $instance["account"]; ?>/admin/main.php?action=form_edit&id=<?php echo $form["id"]; ?>" target="_blank"><?php echo $form["name"]; ?></a></label>
 						<br />
-						
+
 						<div id="form_options_<?php echo $form["id"]; ?>" style="display: <?php echo $options_visibility; ?>; margin-left: 30px;">
 							<h4><?php echo __("Form Options", "menu-activecampaign"); ?></h4>
 							<p><i><?php echo __("Leave as default for normal behavior, or customize based on your needs.", "menu-activecampaign"); ?></i></p>
@@ -358,7 +359,7 @@ function activecampaign_plugin_options() {
 							<input type="checkbox" name="css[<?php echo $form["id"]; ?>]" id="activecampaign_form_css_<?php echo $form["id"]; ?>" value="1" <?php echo $settings_css_checked; ?> />
 							<label for="activecampaign_form_css_<?php echo $form["id"]; ?>" style="">Keep original form CSS</label>
 						</div>
-						
+
 						<?php
 
 					}
@@ -369,10 +370,9 @@ function activecampaign_plugin_options() {
 
 					<div class="activecampaign_site_tracking">
 
-						<h3><?php echo __("Site Tracking", "menu-activecampaign"); ?></h3>
+						<h3><?php echo __("Install Code", "menu-activecampaign"); ?></h3>
 						<p>
-							<?php echo __("Site tracking enables you to record visitor history on your site to use for targeted segmenting. Tracking includes page visits and IP addresses for all known contacts. Note: This is considered personal data.", "menu-activecampaign"); ?>
-							<a href="https://help.activecampaign.com/hc/en-us/articles/221542267-An-overview-of-Site-Tracking" target="_blank"><?php echo __("Learn more about site tracking"); ?></a>.
+							<?php echo __("Installing this code snippet allows you to enable Site Tracking and the Conversations chat widget through your ActiveCampaign account. You can control on which pages these will be loaded on the  <a href=\"http://" . $instance["account"] . "/app/settings/tracking\" target=\"_blank\" style='color: #23538C !important;'>Settings > Tracking page</a> in your ActiveCampaign account.", "menu-activecampaign"); ?>
 						</p>
 
 						<label>
@@ -380,7 +380,13 @@ function activecampaign_plugin_options() {
 							<input type="checkbox" id="activecampaign_site_tracking" <?php echo $settings_st_checked; ?> onchange="site_tracking_toggle(this.checked);">
 							<span class="slider round"></span>
 						</label>
-						<label for="activecampaign_site_tracking" style=""><?php echo __("Enable Site Tracking", "menu-activecampaign"); ?></label>
+						<label for="activecampaign_site_tracking" style=""><?php echo __("Install ActiveCampaign code", "menu-activecampaign"); ?></label>
+
+						<h4><?php echo __("Site Tracking", "menu-activecampaign"); ?></h4>
+						<p>
+							<?php echo __("Site tracking enables you to record visitor history on your site to use for targeted segmenting. Tracking includes page visits and IP addresses for all known contacts. Note: This is considered personal data.", "menu-activecampaign"); ?>
+							<a href="https://help.activecampaign.com/hc/en-us/articles/221542267-An-overview-of-Site-Tracking" target="_blank"><?php echo __("Learn more about site tracking"); ?></a>.
+						</p>
 
 						<div id="activecampaign_site_tracking_options" class="<?php echo (! $settings_st_enabled) ? 'disabled' : ''; ?>">
 
@@ -396,6 +402,12 @@ function activecampaign_plugin_options() {
 							</p>
 
 						</div>
+
+						<h4><?php echo __("Conversations", "menu-activecampaign"); ?></h4>
+						<p>
+							<?php echo __("Capture more leads and provide highly personalized support all while keeping your customer data in ActiveCampaign. Conversations enables you to engage with your customers through live chat and email and allows you to send, receive and manage messages through a unified inbox. You can also connect your Conversations to automations, deals and more.", "menu-activecampaign"); ?>
+							<a href="https://help.activecampaign.com/hc/en-us/articles/360003700720-Conversations-Overview" target="_blank"><?php echo __("Learn more about Conversations"); ?></a>.
+						</p>
 
 					</div>
 
@@ -503,7 +515,7 @@ function activecampaign_plugin_options() {
 				?>
 
 				<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 30px;" />
-				<h3><?php echo __("Subscription Form(s) Preview", "menu-activecampaign"); ?></h3>	
+				<h3><?php echo __("Subscription Form(s) Preview", "menu-activecampaign"); ?></h3>
 
 				<?php
 
@@ -511,17 +523,17 @@ function activecampaign_plugin_options() {
 
 					$form_source = activecampaign_form_source($instance, $form_metadata, true);
 					echo $form_source;
-					
+
 					?>
-					
+
 					<p><?php echo __("Embed using"); ?><code>[activecampaign form=<?php echo $form_id; ?>]</code></p>
-					
+
 					<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 40px;" />
-					
+
 					<?php
-				
+
 				}
-		
+
 			}
 
 		?>

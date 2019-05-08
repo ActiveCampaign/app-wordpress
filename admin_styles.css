@@ -10,7 +10,7 @@
 }
 
 .activecampaign_site_tracking label:first-of-type input {
-	display: none;
+	opacity: 0;
 }
 
 .activecampaign_site_tracking span {
@@ -53,6 +53,12 @@
 
 .activecampaign_site_tracking .slider.round {
 	border-radius: 34px;
+}
+
+.activecampaign_site_tracking label:first-of-type input:focus ~ .slider {
+	box-shadow: 0 0 0 1px #5b9dd9, 0 0 2px 1px rgba(30,140,190,.8);
+	outline: 1px solid transparent;
+	transition: none;
 }
 
 .activecampaign_site_tracking .slider.round:before {
